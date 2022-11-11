@@ -1,0 +1,126 @@
+:root {
+    --black: #242222;
+    --bloc: #3D3939;
+    --white: #E6E6E6;
+  } 
+
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+body{
+    background-color: var(--black);
+    font-family: 'Audiowide', Arial;
+    display: flex;
+	justify-content: center;
+	align-items: center;
+    flex-direction: column;
+    height: 100%;
+    margin: 50px;
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    background: var(--bloc);
+    margin: 0, auto;  
+    flex-direction: column;
+    border-radius: 24px;
+    padding: 20px 32px;
+    
+}
+
+.container > p{
+    justify-content: center;
+    text-align: center;
+    font-size: 30px;
+    color: var(--white);
+    padding: 0 95px;
+}
+
+form{
+    margin: top;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+ 
+}
+
+form input{
+    margin:10px 0;
+    border-radius: 10px;
+    background: none;
+    border: var(--white) 1px solid;
+    padding: 10px;
+    opacity: 70%;
+    height: 20px;
+    font-size: 22px;
+}
+/* form input[type="texte email password"]{
+    width: 500px;
+    background: none;
+    border: var(--white) 1px solid;
+} */
+
+input:enabled{
+   outline-style: none;
+}
+
+.caseCocher{
+    display: flex;
+    align-items: center;
+    padding:60px 28px;
+}
+
+.caseCocher label{
+    margin-left: 10px;
+    color: var(--white);
+    opacity: 70%;
+    font-size: 18px;
+}
+
+a{
+    color: var(--white);
+    text-align: center;
+    margin:20px 0 60px;
+}
+
+.boutonValider input{
+    height:60px;
+    background: #30D0D0;
+    border: none;
+    border-radius: 35px;
+    font-weight: bold;
+    font-size: 30px;
+    color: #242222;
+    padding: 10px 20px;
+    margin:0px;
+}
+
+.finConnexion{
+    font-size: 22px;
+    color: var(--white);
+    margin: 60px 0 0 0 ;
+    text-align: center;
+}
+
+.finConnexion p{
+    opacity: 70%;
+    margin: 0px;
+}
+
+.finConnexion a{
+    display: flex;
+    justify-content: center;
+    /* margin: 0px; */
+}
+
+#RetourAcceuil{
+    font-size: 18px;
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    margin: 60px 0 100px 0;
+}
