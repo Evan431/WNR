@@ -1,10 +1,12 @@
+{% load static %}
+
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>page Connexion</title>
-    <link rel="stylesheet" href="./CSS/style.css"/>
+    <link rel="stylesheet" href="{% static '/css/style.css'%}">
   </head>
 
   <body>
@@ -40,10 +42,10 @@
 
         <div class="finConnexion">
           <p>Vous avez déjà un compte WNR?</p>
-          <a href="./page non connecte.html">Se connecter</a>
+          <a href="{% url 'pageNonConnecte' %}">Se connecter</a>
         </div>
 
-        <a id="RetourAcceuil" href=""> Retour à la page d'acceuil</a>
+        <a id="RetourAcceuil" href="{% url 'index' %}"> Retour à la page d'acceuil</a>
 
     </div>
   

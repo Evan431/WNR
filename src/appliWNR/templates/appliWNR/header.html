@@ -1,6 +1,6 @@
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/header.css'%}">
-<link rel="stylesheet" href="{% static '/css/variable.css'%}">
+<link rel="stylesheet" href="{% static '/css/header.css' %}">
+<link rel="stylesheet" href="{% static '/css/variable.css' %}">
 
 <header>
   <a href="header.html" id="logoWNR"
@@ -33,7 +33,7 @@
     <a href="header.html" id="logo_search"
       ><img src=" {% static 'images/loupe.svg'%} " alt="logo rechercher"
     /></a>
-    <a href="header.html" id="logo_account"
+    <a href="{% url 'pageCreation' %}" id="logo_account" 
       ><img src=" {% static 'images/compte_vide.svg'%} " alt="logo mon compte"
     /></a>
   </div>

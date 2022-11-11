@@ -1,10 +1,12 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
     <head> 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>page Connexion</title>
-        <link rel="stylesheet" href="./CSS/style.css"/>
+        <link rel="stylesheet" href=" {% static '/css/style.css'%}"/>
     </head>
 
     <body>
@@ -31,10 +33,10 @@
 
             <div class="finConnexion">
             <p>Vous n’avez pas de compte WNR ?</p>
-            <a href="./pageCréation.html">Créer un compte</a>
+            <a href="{% url 'pageCreation' %}">Créer un compte</a>
           </div>
            
-          <a id="RetourAcceuil" href=""> Retour à la page d'acceuil</a>
+          <a id="RetourAcceuil" href="{% url 'index' %}"> Retour à la page d'acceuil</a>
 
     </body>
 </html>
