@@ -1,0 +1,11 @@
+/* Importation font */
+@import url(https://fonts.googleapis.com/css?family=Audiowide:regular);
+@import url(https://fonts.googleapis.com/css?family=Exo:regular);
+
+/* Variables */
+:root {
+  --black: #242222;
+  --gray: #3d3939;
+  --white: #e6e6e6;
+  --blue: #30d0d0;
+}

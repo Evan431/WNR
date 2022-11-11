@@ -1,0 +1,87 @@
+header {
+  background-color: var(--gray);
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+}
+
+div#icon_header {
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+nav {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+nav li {
+  margin: 0 20px 0 20px;
+  position: relative;
+}
+
+nav li::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 3px;
+  background-color: var(--blue);
+  transform: scaleX(0);
+  transition: transform 0.5s;
+  transform-origin: 0% 50%;
+}
+
+nav li:focus::after,
+nav li:hover::after {
+  transform: scaleX(1);
+}
+
+li#IndicateurPageActuel::after {
+  transform: scaleX(1);
+}
+
+nav li a {
+  color: var(--blue);
+  text-decoration: none;
+  font-family: Audiowide, arial;
+  font-size: 1.25em;
+}
+
+nav li a:focus,
+nav li a:hover {
+  opacity: 0.7;
+  transition: 0.5s;
+}
+
+a#logoWNR {
+  display: flex;
+  align-items: center;
+  margin: 10px 25px;
+}
+
+svg#logo_WNR {
+  filter: drop-shadow(0px 0px 308px #2ceaea);
+  filter: drop-shadow(0px 0px 176px #2ceaea);
+  filter: drop-shadow(0px 0px 103px #2ceaea);
+  filter: drop-shadow(0px 0px 51px #2ceaea);
+  filter: drop-shadow(0px 0px 14px #2ceaea);
+}
+
+body {
+  margin: 0;
+}
+
+a#logo_search {
+  margin-right: 50px;
+}

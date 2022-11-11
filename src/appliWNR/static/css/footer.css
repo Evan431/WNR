@@ -1,0 +1,55 @@
+footer {
+  background-color: var(--gray);
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: flex-end;
+  padding: 20px 30px 30px 30px;
+  margin-top: 100%;
+}
+
+p {
+  color: var(--white);
+  font-family: Exo, arial;
+  font-size: 10px;
+}
+
+footer div {
+  display: flex;
+  flex-flow: column;
+  width: 33%;
+}
+
+a#arrow {
+  width: 33%;
+  display: flex;
+  flex-flow: column;
+  align-items: flex-end;
+}
+
+a#arrow svg {
+  transition: 0.5s;
+  width: 204px;
+  height: 64px;
+}
+
+a#arrow svg:hover {
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+div#copyright {
+  align-items: center;
+}
+
+div#copyright p {
+  margin-top: 50px;
+}
+
+div#attribution_tmdb {
+  justify-content: flex-end;
+}
+
+body {
+  margin: 0;
+}

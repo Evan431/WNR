@@ -1,0 +1,36 @@
+{% load static %}
+<link rel="stylesheet" href="{% static '/css/footer.css'%}">
+<link rel="stylesheet" href="{% static '/css/variable.css'%}">
+
+<footer>
+  <div id="attribution_tmdb">
+    <a href="https://www.themoviedb.org/"
+      ><img src="{% static 'images/logo_tmdb.svg'%} " alt="logo The Movie DataBase"
+    /></a>
+    <p>
+      Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par
+      TMDB.
+    </p>
+  </div> 
+
+  <div id="copyright">
+    <img src="{% static 'images/logo_wnr.svg'%}" alt="logo WNR" />
+    <p>Copyright © 2022 - Whatch’N Rate</p>
+  </div>
+
+  <a id="arrow" href="#">
+    <svg
+      width="54"
+      height="54"
+      viewBox="0 0 54 54"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M23.6668 53.6668V13.0835L5.00016 31.7502L0.333496 27.0002L27.0002 0.333496L53.6668 27.0002L49.0002 31.7502L30.3335 13.0835V53.6668H23.6668Z"
+        fill="#30D0D0"
+      />
+    </svg>
+  </a>
+</footer>
+
