@@ -19,7 +19,7 @@ L'application comportera de nombreuses fonctionalités :
 - Pouvoir ajouter un film ou une série dans “Ma liste”
 - Pouvoir proposer des statistiques aux utilisateurs 
 
-## Choix des langages 
+## Choix des langages de programmation
 
 Pour mener à bien notre projet, nous avons décidé de créer une interface utilisateur ergonomique et intuitive, en utilisant *Html5*, le langage de programmation qui permet de créer le contenu et la structure d'une page web. Ensuite, nous avons voulu que le visuel de notre application soit plaisant, nous avons donc adopté le langage *CSS* car il permet de décrire la mise en page et le design d’une page HTML. Pour créer notre algorithme de suggestion, nous avons voulu utiliser le langage Python, puisqu’il est très utilisé pour la création d’IA, ce dont nous avons besoin. Pour combiner Python et Html, nous avons donc décidé d’utiliser *Django*, un framework qui lie ces langages. 
 
