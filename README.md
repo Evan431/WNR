@@ -21,10 +21,8 @@ L'application comportera de nombreuses fonctionalités :
 
 ## Choix des langages de programmation
 
-Pour mener à bien notre projet, nous avons décidé de créer une interface utilisateur ergonomique et intuitive, en utilisant *Html5*, le langage de programmation qui permet de créer le contenu et la structure d'une page web. Ensuite, nous avons voulu que le visuel de notre application soit plaisant, nous avons donc adopté le langage *CSS* car il permet de décrire la mise en page et le design d’une page HTML. Pour créer notre algorithme de suggestion, nous avons voulu utiliser le langage Python, puisqu’il est très utilisé pour la création d’IA, ce dont nous avons besoin. Pour combiner Python et Html, nous avons donc décidé d’utiliser *Django*, un framework qui lie ces langages. 
+Pour mener à bien notre projet, nous avons décidé de créer une interface utilisateur ergonomique et intuitive, en utilisant **Html5**, le langage de programmation qui permet de créer le contenu et la structure d'une page web. Ensuite, nous avons voulu que le visuel de notre application soit plaisant, nous avons donc adopté le langage **CSS** car il permet de décrire la mise en page et le design d’une page HTML. Pour créer notre algorithme de suggestion, nous avons voulu utiliser le langage Python, puisqu’il est très utilisé pour la création d’IA, ce dont nous avons besoin. Pour combiner Python et Html, nous avons donc décidé d’utiliser **Django**, un framework qui lie ces langages. 
 
 ## Prototype de l'application
 
-Afin de nous mettre d'accord sur le visuel de l'application, nous avons créer une maquette grâce au logiciel libre Figma. 
-
-[Prototype Figma](https://www.figma.com/proto/nwNRb43S8fsSh4LbzUYS7L/Sketch-%2F-Maquette?page-id=334%3A2&node-id=381%3A1501&viewport=377%2C319%2C0.04&scaling=scale-down&starting-point-node-id=381%3A1501)
+Afin de nous mettre d'accord sur le visuel de l'application, nous avons créer une maquette grâce au [logiciel libre Figma](https://www.figma.com/proto/nwNRb43S8fsSh4LbzUYS7L/Sketch-%2F-Maquette?page-id=334%3A2&node-id=381%3A1501&viewport=377%2C319%2C0.04&scaling=scale-down&starting-point-node-id=381%3A1501).
