@@ -21,8 +21,9 @@ from appliWNR.views.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path(r'^pageCreation/', pageCreation, name='pageCreation'),
-    path(r'^pageNonConnecte/', pageNonConnecte, name='pageNonConnecte')
+    path('^pageCreation/', pageCreation, name='pageCreation'),
+    path('^pageNonConnecte/', pageNonConnecte, name='pageNonConnecte'),
+    path('^resultatsRecherche/', resultatsRecherche, name='resultatsRecherche')
     # path('', include('appliWNR.urls'))
 ]
 

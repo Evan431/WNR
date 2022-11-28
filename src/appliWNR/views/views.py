@@ -9,3 +9,6 @@ def pageCreation(request):
 
 def pageNonConnecte(request):
     return render(request, 'appliWNR/page non connecte.html')
+
+def resultatsRecherche(request):
+    return render(request, 'appliWNR/resultatsRecherche.html')
