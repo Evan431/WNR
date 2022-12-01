@@ -2,14 +2,34 @@ body{
     background-color: #242222;
 }
 
-div{
+header{
+    border-bottom: 20px solid #242222;
 }
 
 button{
+    width: 40px;
+    height: 40px;
     background-color: #242222;
     border: none;
 }
 
+form{
+    width: 70%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 input{
-    width: 50%;
+    width: 90%;
+    height: 100%;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
 }
