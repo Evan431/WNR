@@ -21,8 +21,8 @@ from appliWNR.views.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path(r'^pageCreation/', pageCreation, name='pageCreation'),
-    path(r'^pageNonConnecte/', pageNonConnecte, name='pageNonConnecte')
+#    path('^pageInscription/', signup_page, name='pageInscription'),
+#     path('^pageConnexion/', login_page, name='pageConnexion')
     # path('', include('appliWNR.urls'))
 ]
 

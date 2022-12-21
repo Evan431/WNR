@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head> 
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>page Non Connecte</title>
+        <link rel="stylesheet" href=" {% static '/css/style.css'%}"/>
+    </head>
+
+    <body>
+        <div class="container"> 
+
+            <p> WNR <br>
+            Se connecter avec un <br> compte WNR
+            </p>
+
+            <form method="GET" class="post-form">
+
+                {% csrf_token %}
+                
+                {{form.as_p }}
+
+                <div class="boutonValider">
+                    <label for="Bouton"> </label>
+                        <input type="submit" name="Bouton" value="Se connecter">
+                </div> 
+            </form>
+
+            <div class="finConnexion">
+            <p>Vous n’avez pas de compte WNR ?</p>
+            <a href="{% url 'pageInscription' %}">Créer un compte</a>
+          </div>
+           
+          <a id="RetourAcceuil" href="{% url 'index' %}"> Retour à la page d'acceuil</a>
+
+    </body>
+</html>
