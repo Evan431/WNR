@@ -1,6 +1,6 @@
 # WNR
 
-Ce projet se déroule dans le cadre de notre S3 de BUT Informatique, consistuant le long projet de ce semestre (120h). Nous le faisons en groupe de 5, ce qui demande une bonne organisation. Nous sommes encadré par un enseignant afin de nous aiguiller et nous faire par de ce qui pourrait être amélioré. Nous avons 2 soutenances de prévu, ainsi que plusieurs rendus pour la partie gestion de projet. 
+Ce projet se déroule dans le cadre de notre S3 de BUT Informatique, consistuant le long projet de ce semestre (120h). Nous le faisons en groupe de 5, ce qui demande une bonne organisation. Nous sommes encadrés par un enseignant afin de nous aiguiller et nous faire par de ce qui pourrait être amélioré. Nous avons 2 soutenances de prévu, ainsi que plusieurs rendus pour la partie gestion de projet. 
 
 ## Présentation de l'application
 
