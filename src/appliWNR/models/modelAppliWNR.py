@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class CompagnieProduction(models.Model) :
     nom = models.CharField(max_length = 100)
 
@@ -43,9 +42,6 @@ class Utilisateur(models.Model):
     motDePase = models.CharField(max_length=60) 
     recevoirMail = models.BooleanField()
     cgu = models.BooleanField()
-    maListe = models.ManyToManyField(Programme)
-    listeDejaVue = models.ManyToManyField(Programme)
-    listeProgramme = models.ManyToManyField(Programme)
 
 class Film(Programme):
     duree = models.CharField(max_length = 100)
