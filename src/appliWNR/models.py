@@ -15,10 +15,7 @@ class Genre(models.Model) :
     nom = models.CharField(max_length=100)
 
 class Note(models.Model) : 
-    note : models.PositiveIntegerField(max_length=10)
-
-class Role(models.Model) : 
-    nom = models.CharField(max_length=100)
+    note : models.PositiveIntegerField()
 
 class Programme(models.Model):
     titre = models.CharField(max_length=100)
@@ -27,7 +24,6 @@ class Programme(models.Model):
     popularite = models.FloatField()
     affiche = models.CharField(max_length=100)
     video = models.CharField(max_length=100)
-    id = models.IntegerField(max_length=100)
     listRealisateur = models.ManyToManyField(Realisateur)
     listGenre = models.ManyToManyField(Genre)
     listCompaProd = models.ManyToManyField(CompagnieProduction)
@@ -47,10 +43,16 @@ class Film(Programme):
     duree = models.CharField(max_length = 100)
 
 class Serie(Programme):
-    nombreSaison = models.IntegerField(max_length = 10)
-    nombreEpisodes = models.IntegerField(max_length = 10)
+    nombreSaison = models.IntegerField(default=1)
+    nombreEpisodes = models.IntegerField(default=1)
     status = models.CharField(max_length = 100)
-    dureeMoyEp = models.IntegerField(max_length = 10)
+    dureeMoyEp = models.IntegerField()
+
+class Role(models.Model) : 
+    nom = models.CharField(max_length=100)
+    serie = models.ForeignKey(Serie, on_delete=models.CASCADE)
+    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    acteur = models.ForeignKey(Acteur, on_delete=models.CASCADE)
 
 
 
