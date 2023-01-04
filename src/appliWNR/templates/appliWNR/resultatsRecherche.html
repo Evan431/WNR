@@ -6,7 +6,8 @@
 <link rel="stylesheet" href="{% static '/css/recherche.css'%}">
   <body>
     <div class="container">
-      <form action="/recherche/" method="post">
+      <form action="{% url 'resultatsRecherche' %}" method="POST">
+      {% csrf_token %} 
           <label for="Recherche"></label>
             <input  type="text" name="Recherche" placeholder="Recherche">
               <label for="Bouton"></label>
@@ -19,6 +20,19 @@
               </button/>
       </form>
     </div>
+    <h1>Résultats</h1>
+    {% if results %}
+    <ul>
+      {% for res in results %}
+        <li>
+          <p>{{res.titre}} ({{res.titreOriginal}})</p>
+          <a href="{{res.affiche}}"/>
+        </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+      <p>Meh</p>
+    {% endif %}
   
   </body>
 {% endblock %}

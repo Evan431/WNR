@@ -1,0 +1,28 @@
+main{
+	display: flex;
+	flex-flow: row;
+	background-color: #242222;
+	justify-content: space-around;
+}
+
+h1{
+	background-color: #242222;
+}
+
+section{
+	display: flex;
+	flex-flow: row;
+}
+
+.radio-button{
+	position: relative;
+}
+
+div{
+	display: flex;
+	flex-flow: column;
+}
+
+label{
+	align-self: center;
+}

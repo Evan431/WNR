@@ -23,8 +23,10 @@ urlpatterns = [
     path('', index, name='index'),
     path('^pageCreation/', pageCreation, name='pageCreation'),
     path('^pageNonConnecte/', pageNonConnecte, name='pageNonConnecte'),
-    path('^resultatsRecherche/', resultatsRecherche, name='resultatsRecherche')
+    path('^resultatsRecherche/', resultatsRecherche, name='resultatsRecherche'),
+    path('^statistiques/', statistiques, name='statistiques'),
+    path('^statistiquesGenerales/', statistiquesGenerales, name='statistiquesGenerales'),
+    path('^programme/', programme, name='programme')
     # path('', include('appliWNR.urls'))
 ]
-
 
