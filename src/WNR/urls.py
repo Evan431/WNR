@@ -16,14 +16,19 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from appliWNR.views.views import *
+from appliWNR.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('^pageCreation/', pageCreation, name='pageCreation'),
-    path('^pageNonConnecte/', pageNonConnecte, name='pageNonConnecte'),
-    path('^resultatsRecherche/', resultatsRecherche, name='resultatsRecherche')
+    path('pageInscription/', signup, name='pageInscription'),
+    path('pageConnexion/', login_user, name='pageConnexion'),
+     path('resultatsRecherche/', resultatsRecherche, name='resultatsRecherche'),
+    path('statistiques/', statistiques, name='statistiques'),
+    path('statistiquesGenerales/', statistiquesGenerales, name='statistiquesGenerales'),
+    path('programme/', programme, name='programme'),
+    path('compte/', compte, name='compte'),
+    path('cgu/', cgu, name='cgu'),
     # path('', include('appliWNR.urls'))
 ]
 

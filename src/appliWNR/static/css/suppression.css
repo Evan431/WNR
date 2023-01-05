@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
 
 body{
-    background-color: #242222;
+    background-color:var(--black);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,7 +32,7 @@ body{
     /* width: 238px;
     height: 40px; */
     font-weight: bold;
-    color: #242222;
+    color: var(--black);
     font-size: 30px;
     padding: 10px 20px;
     border-radius: 35px;

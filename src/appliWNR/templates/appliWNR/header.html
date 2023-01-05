@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="{% static '/css/variable.css' %}">
 
 <header>
-  <a href="header.html" id="logoWNR"
+  <a href="{% url 'index' %}" id="logoWNR"
     ><svg
       id="logo_WNR" 
       width="150"
@@ -21,20 +21,31 @@
   <nav id="nav">
     <ul>
       <li id="IndicateurPageActuel">
-        <a href="header.html">ACCUEIL</a>
+        <a href="{% url 'index' %}">ACCUEIL</a>
       </li>
-      <li><a href="header.html">SUGGESTION</a></li>
-      <li><a href="header.html">MA LISTE</a></li>
-      <li><a href="header.html">FILMS</a></li>
-      <li><a href="header.html">SERIES</a></li>
+      <li><a href="{% url 'statistiques' %}">SUGGESTION</a></li>
+      {% if user.is_authenticated %}
+      <li><a href="#">MA LISTE</a></li>
+      {% else %}
+      <li><a href="{% url 'pageConnexion' %}">MA LISTE</a></li>
+      {% endif %}
+      <li><a href="{% url 'programme' %}">FILMS</a></li>
+      <li><a href="{% url 'programme' %}">SERIES</a></li>
+     
     </ul>
   </nav>
   <div id="icon_header">
     <a href="{% url 'resultatsRecherche' %}" id="logo_search"
       ><img src=" {% static 'images/loupe.svg'%} " alt="logo rechercher"
     /></a>
-    <a href="{% url 'pageCreation' %}" id="logo_account" 
+    {% if user.is_authenticated %}
+    <a href="{% url 'compte' %}" id="logo_account"  
+      ><img src=" {% static 'images/compte_vide.svg'%} " alt="logo mon compte"
+      /></a>
+    {% else %}
+    <a href="{% url 'pageConnexion' %}" id="logo_account" 
       ><img src=" {% static 'images/compte_vide.svg'%} " alt="logo mon compte"
     /></a>
+    {% endif %}
   </div>
 </header>

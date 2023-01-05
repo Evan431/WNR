@@ -1,3 +1,17 @@
 from django.contrib import admin
+from appliWNR.models import *
 
-# Register your models here.
+admin.site.register(CompagnieProduction)
+admin.site.register(Realisateur)
+admin.site.register(Acteur)
+admin.site.register(Genre)
+admin.site.register(Note)
+admin.site.register(Utilisateur)
+admin.site.register(Film)
+admin.site.register(Serie)
+admin.site.register(Role)
+admin.site.register(Liste)
+admin.site.register(ListeDejaVue)
+admin.site.register(MaListe)
+
+

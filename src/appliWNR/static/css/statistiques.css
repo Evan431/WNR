@@ -1,0 +1,104 @@
+body{
+    background-color: #242222;
+    text-align: center;
+    font-family: Audiowide, Arial, Helvetica, sans-serif;
+}
+
+table{
+    width: 100%;
+    border: 0.5px solid E6E6E6;
+    color: E6E6E6;
+    display: flex;
+    justify-content: space-between;
+}
+
+h1{
+    color: var(--blue);
+}
+
+tbody{
+    width: 100%;
+}
+
+td{
+    border: 0.5px solid grey;
+    width: 33%;
+}
+
+tr{
+    border: 0.5px solid grey;
+    display: inline-flex;
+    width: 100%;
+}
+
+div{
+    border-radius: 5px;
+    width: inherit;
+}
+
+div#groupe_stats {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+
+div.stat {
+    display: flex;
+    flex-direction: column;
+}
+
+p.nombre {
+    background-color: var(--gray);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 30px;
+    color: var(--white);
+    margin-bottom: 0px;
+    width: fit-content;
+    align-self: center;
+}
+
+p.nom {
+    background-color: var(--gray);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 30px;
+    color: var(--white);
+    margin-bottom: 0px;
+    width: fit-content;
+    align-self: center;
+}
+
+p.nom_stat {
+    margin-top: 5px;
+    font-size: 25px;
+    color: var(--white);
+}
+
+div.camembert {
+    justify-content: space-around;
+    display: flex;
+    flex-flow: row nowrap;
+}
+
+hr{
+    width:1px;
+    height:auto;
+    margin: 5px;
+    border-color: var(--white);
+    background-color: var(--white);
+}
+
+img{
+    width: 35%;
+    height: 35%;
+}
+
+section{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+main{
+    margin-bottom: 50px;
+}
