@@ -1,10 +1,12 @@
+{% load static %}
+
 <!doctype html>
 <html lang="fr">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>suppression compte</title>
-    <link rel="stylesheet" href="./CSS/suppression.css"/>
+    <link rel="stylesheet"  href="{% static '/css/suppression.css'%}"/>
   </head>
 
   <body> 
@@ -17,9 +19,8 @@
             WNR. Veuillez cliquer sur le bouton Supprimer pour 
             rendre la  suppression de compte effective
         </p>  
-
-        <button type="button">Annuler</button>   
-        <button type="button">Supprimer</button>   
+        <a  href="{% url 'compte' %}">Annuler</a>
+        <a  href="{% url 'confirmationSuppression' %}">Supprimer</a>
     </div>
 
   </body>

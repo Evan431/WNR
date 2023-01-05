@@ -41,6 +41,20 @@ def login_user(request):
             return redirect('index')
     return render(request, 'appliWNR/pageConnexion.html')
 
+# ------------------------------------  Pour se deconnecter -----------------------------------#
+def logout_request(request):
+    logout(request)
+    return redirect(request, 'index')
+
+# ------------------------------------  Pour supprimer un compte -----------------------------------#
+
+def deleteAccount(request):
+    return render(request, 'appliWNR/pageSuppressionCompte.html')
+
+def confirmationSuppression(request):
+    return render(request, 'appliWNR/confirmation suppression.html')
+
+
 def resultatsRecherche(request):
     if request.method == "POST" :
         query = request.POST.get('Recherche', None)

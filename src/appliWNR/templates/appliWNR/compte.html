@@ -58,8 +58,8 @@
   </section>
 
   <section id="boutons">
-    <button>Se déconnecter</button>
-    <button>Supprimer mon compte</button>
+    <a class="bouton" href="{% url 'deconnexion' %}">Se déconnecter</a>
+    <a class="bouton" href="{% url 'suppresionCompte' %}">Supprimer mon compte</a>
   </section>
 </main>
 {% endblock %}

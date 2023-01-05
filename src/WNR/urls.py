@@ -29,6 +29,9 @@ urlpatterns = [
     path('programme/', programme, name='programme'),
     path('compte/', compte, name='compte'),
     path('cgu/', cgu, name='cgu'),
+    path('deconnexion/',logout_request, name='deconnexion'),
+    path('pageSuppresionCompte', deleteAccount, name='suppresionCompte'),
+    path('pageConfirmationSuppression', confirmationSuppression, name="confirmationSuppression"),
     # path('', include('appliWNR.urls'))
 ]
 
