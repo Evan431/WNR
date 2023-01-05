@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from WNR.settings import AUTH_USER_MODEL
 
 class CompagnieProduction(models.Model) :
     nom = models.CharField(max_length = 100)
@@ -28,16 +30,21 @@ class Programme(models.Model):
     listGenre = models.ManyToManyField(Genre)
     listCompaProd = models.ManyToManyField(CompagnieProduction)
     listActeur = models.ManyToManyField(Acteur, through='Role')
-    
-    class Meta:
-        abstract = True
 
-class Utilisateur(models.Model):
-    pseudo = models.CharField(max_length=20)
-    adresseMail = models.EmailField(max_length=40)
-    motDePase = models.CharField(max_length=60) 
-    recevoirMail = models.BooleanField()
-    cgu = models.BooleanField()
+class Utilisateur(AbstractUser):
+    pass
+
+class Liste(models.Model):
+    utilisateur = models.OneToOneField(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    programme = models.ManyToManyField(Programme)
+
+class ListeDejaVue(models.Model):
+    utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
+    programme = models.ManyToManyField(Programme)
+
+class MaListe(models.Model):
+    utilisateur = models.OneToOneField(Utilisateur, on_delete=models.CASCADE)
+    programme = models.ManyToManyField(Programme)
 
 class Film(Programme):
     duree = models.CharField(max_length = 100)
@@ -50,8 +57,9 @@ class Serie(Programme):
 
 class Role(models.Model) : 
     nom = models.CharField(max_length=100)
-    serie = models.ForeignKey(Serie, on_delete=models.CASCADE)
-    film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    # serie = models.ForeignKey(Serie, on_delete=models.CASCADE)
+    # film = models.ForeignKey(Film, on_delete=models.CASCADE)
+    programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
     acteur = models.ForeignKey(Acteur, on_delete=models.CASCADE)
 
 

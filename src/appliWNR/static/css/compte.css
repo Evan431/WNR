@@ -1,0 +1,77 @@
+body {
+    background-color: var(--black);
+    text-align: center;
+    font-family: Audiowide, Arial, Helvetica, sans-serif;
+  }
+  
+  h3 {
+    font-size: 28px;
+    color: var(--blue);
+    font-weight: 100;
+  }
+  
+  div#groupe_stats {
+    display: flex;
+    justify-content: space-around;
+    flex-flow: row wrap;
+    width: 70%;
+    margin: auto;
+  }
+  
+  div.stat {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  p.nombre {
+    background-color: var(--gray);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 20px;
+    color: var(--white);
+    margin-bottom: 0px;
+  }
+  
+  p.nom_stat {
+    margin-top: 5px;
+    font-size: 15px;
+    color: var(--white);
+  }
+  
+  button,
+  input.bouton,
+  a.bouton {
+    background-color: var(--blue);
+    font-family: Exo, Arial;
+    border-radius: 24px;
+    color: var(--black);
+    font-weight: bold;
+    padding: 5px 10px;
+    font-size: medium;
+    text-decoration: none;
+    transform: scale(1);
+    transition: 0.5s;
+  }
+  
+  button:hover,
+  button:focus {
+    transform: scale(1.05);
+    transition: 0.5s;
+    background-color: #58eaea;
+  }
+  
+  h4 {
+    color: var(--white);
+    font-weight: 100;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    color: var(--white);
+    font-family: Exo, Arial;
+  }
+  

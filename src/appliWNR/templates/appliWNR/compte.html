@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>Compte</title>
+<link rel="stylesheet" href=" {% static '/css/variable.css'%}" />
+<link rel="stylesheet" href=" {% static '/css/compte.css'%}" />
+{% endblock %} {% block content %}
+<main>
+  <section>
+    <h3>Mes statistiques</h3>
+
+    <div id="groupe_stats">
+      <div class="stat">
+        <p class="nombre">12j et 8h</p>
+        <p class="nom_stat">Temps passé</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">65</p>
+        <p class="nom_stat">Nombre de films/séries</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">Action</p>
+        <p class="nom_stat">Genre préféré</p>
+      </div>
+    </div>
+    <a class="bouton" href="{% url 'statistiques' %}">Voir plus</a>
+  </section>
+  <section>
+    <h3>Films / Séries déjà vues</h3>
+    <button>Voir plus</button>
+  </section>
+  <section>
+    <h3>Informations</h3>
+    <h4>Modifier votre mot de passe</h4>
+
+    <form action="#">
+      <label for="mdp"
+        >Entrez votre ancien mot de passe <input name="mdp" type="password"
+      /></label>
+      <label for="new_mdp"
+        >Entrez votre nouveau mot de passe
+        <input name="new_mdp" type="password"
+      /></label>
+      <label for="confirm_mdp"
+        >Confirmez votre mot de passe <input name="confirm_mdp" type="password"
+      /></label>
+      <input type="submit" class="bouton" name="modif_mdp" value="Valider" />
+    </form>
+
+    <h4>Modifier votre adresse mail</h4>
+    <h4>Modifier votre pseudo</h4>
+  </section>
+  <section>
+    <h3>Paramètres</h3>
+    <input type="checkbox" />
+    <label
+      >Je veux recevoir des mails hebdomadaires contenant des suggestions de
+      contenu proposé par WNR.</label
+    >
+  </section>
+
+  <section id="boutons">
+    <button>Se déconnecter</button>
+    <button>Supprimer mon compte</button>
+  </section>
+</main>
+{% endblock %}

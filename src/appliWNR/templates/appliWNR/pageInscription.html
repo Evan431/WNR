@@ -5,25 +5,43 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>page Connexion</title>
+    <title>page Inscription </title>
     <link rel="stylesheet" href="{% static '/css/style.css'%}">
   </head>
 
   <body>
     <div class="container"> 
 
+
       <p> WNR <br>
-      Créer un compte WNR
-      </p>
-      <form method="GET" class="post-form">
-        {% csrf_token %}
+        Créer un compte WNR
+        </p>
+        <form method="POST">
+
+          {% csrf_token %}
+
+          <label for="Adresse_mail"></label>
+            <input type="email" name="Adresse_mail" placeholder="Adresse mail" required>
+
+          <label for="Pseudo"></label>
+          <input  type="text" name="Pseudo" placeholder="Pseudo" required>
+
+          <label for="Mot_de_passe"></label>
+            <input  type="password" name="Mot_de_passe" required>
+
+          <!-- <label for="Mot_de_passe"></label>
+            <input  type="password" name="Mot_de_passe" placeholder="Mot de passe" required> -->
         
-        {{form.as_p }}
-      <div class="boutonValider">
-        <label for="Bouton"> </label>
-          <input type="submit" name="Bouton" value="Continuer">
-      </div> 
-    </form> 
+            <div class="caseCocher">
+              <input  type="checkbox" name="caseCocher" required>
+              <label for="caseCocher"> J'ai lu et j'accepte les <a href="{% url 'cgu' %}">conditions d'utilisations</a></label>
+            </div>
+            
+            <div class="boutonValider">
+              <label for="Bouton"> </label>
+                <input type="submit" name="Bouton" value="Continuer">
+            </div> 
+        </form>
 
     <div class="finConnexion">
       <p>Vous avez déjà un compte WNR?</p>
@@ -34,3 +52,5 @@
   </div>
   </body>
 </html>
+
+

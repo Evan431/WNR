@@ -1,0 +1,27 @@
+main{
+	background-color: #242222;
+}
+
+.filtrage{
+    display: flex;
+	flex-flow: row;
+	justify-content: space-around;
+}
+
+section{
+	display: flex;
+	flex-flow: row;
+}
+
+.radio-button{
+	position: relative;
+}
+
+div{
+	display: flex;
+	flex-flow: column;
+}
+
+label{
+	align-self: center;
+}

@@ -16,15 +16,21 @@
             Se connecter avec un <br> compte WNR
             </p>
 
-            <form method="GET" class="post-form">
+            <form method="POST" class="post-form">
 
                 {% csrf_token %}
                 
-                {{form.as_p }}
+                <label for="Pseudo"></label>
+                <input  type="pseudo" name="Pseudo" placeholder="pseudo" required>
+
+                <label for="Mot_de_passe"></label>
+                <input  type="password" name="Mot_de_passe" required>
+
+                <a href="#">Mot de passe oublié?</a>
 
                 <div class="boutonValider">
-                    <label for="Bouton"> </label>
-                        <input type="submit" name="Bouton" value="Se connecter">
+                  <label for="Bouton"> </label>
+                      <input type="submit" name="Bouton" value="Se connecter">
                 </div> 
             </form>
 

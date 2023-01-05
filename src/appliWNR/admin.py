@@ -10,6 +10,8 @@ admin.site.register(Utilisateur)
 admin.site.register(Film)
 admin.site.register(Serie)
 admin.site.register(Role)
-
+admin.site.register(Liste)
+admin.site.register(ListeDejaVue)
+admin.site.register(MaListe)
 
 

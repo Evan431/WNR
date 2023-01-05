@@ -5,13 +5,25 @@ footer {
   flex-flow: row nowrap;
   align-items: flex-end;
   padding: 20px 30px 30px 30px;
-  margin-top: 100%;
+  margin-top: 100px;
 }
 
-p {
+p,
+a {
   color: var(--white);
   font-family: Exo, arial;
   font-size: 10px;
+}
+
+a#link_cgu {
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+a#link_cgu:hover,
+a#link_cgu:focus {
+  opacity: 0.5;
+  transition: 0.5s;
 }
 
 footer div {
@@ -43,11 +55,22 @@ div#copyright {
 }
 
 div#copyright p {
-  margin-top: 50px;
+  margin-top: 10px;
+}
+
+div#copyright img {
+  width: 150px;
 }
 
 div#attribution_tmdb {
-  justify-content: flex-end;
+  display: flex;
+  justify-content: flex-start;
+}
+
+div#attribution_tmdb p,
+div#attribution_tmdb a {
+  display: flex;
+  justify-content: flex-start;
 }
 
 body {

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+
+{% block head %}
+  <title>Programme</title>
+  <link rel="stylesheet" href="{% static '/css/programme.css'%}"/>
+
+{% endblock %} 
+
+{% block content %}
+	
+    <main>
+	<h1> Etre un film ou une série, telle est la question... o-o </h1>
+	
+    <div class="filtrage">
+		<section>
+			<select id="genre" name="genre">
+				<option value="" selected>Genre</option> 
+			{% for genre in genres %}
+				<option value="{{genre}}">{{genre}}</option> 
+  			{% endfor %}
+			</select>
+		</section>
+		<section>
+			<select id="annee" name="annee">
+				<option value="" selected>Année</option> 
+			{% for annee in annees %}
+				<option value="{{annee}}">{{annee}}</option> 
+  			{% endfor %}
+			</select>
+		</section>
+		<section>
+			<select id="duree" name="duree">
+				<option value="" selected>Durée</option> 
+			{% for duree in durees %}
+				<option value="{{duree}}">{{duree}}</option> 
+  			{% endfor %}
+			</select>
+		</section>
+		<section>
+			{% for caractere in lettres %}
+			<div>
+				<input type="radio" name="lettre" id="lettre"/>
+				<label for="lettre">{{caractere}}</label>
+			</div>
+      		{% endfor %}
+		</section>
+        </div>
+
+	</main>
+
+{% endblock %}

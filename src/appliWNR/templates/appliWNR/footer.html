@@ -1,17 +1,21 @@
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/footer.css'%}">
-<link rel="stylesheet" href="{% static '/css/variable.css'%}">
+<link rel="stylesheet" href="{% static '/css/footer.css'%}" />
+<link rel="stylesheet" href="{% static '/css/variable.css'%}" />
 
 <footer>
   <div id="attribution_tmdb">
     <a href="https://www.themoviedb.org/"
-      ><img src="{% static 'images/logo_tmdb.svg'%} " alt="logo The Movie DataBase"
+      ><img
+        src="{% static 'images/logo_tmdb.svg'%} "
+        alt="logo The Movie DataBase"
     /></a>
     <p>
-      Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par
-      TMDB.
+      Ce produit utilise l'API TMDB mais n'est ni approuvé ni certifié par TMDB.
     </p>
-  </div> 
+    <a id="link_cgu" href="{% url 'cgu' %}"
+      >Conditions Générales d'Utilisations de WNR</a
+    >
+  </div>
 
   <div id="copyright">
     <img src="{% static 'images/logo_wnr.svg'%}" alt="logo WNR" />
@@ -22,7 +26,7 @@
     <svg
       width="54"
       height="54"
-      viewBox="0 0 54 54"
+      viewBox="0 0 45 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -33,4 +37,3 @@
     </svg>
   </a>
 </footer>
-

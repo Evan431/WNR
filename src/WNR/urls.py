@@ -21,9 +21,15 @@ from appliWNR.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
-    path('pageInscription/', signup_page, name='pageInscription'),
-    path('pageConnexion/', login_page, name='pageConnexion'),
-    path('', include('appliWNR.urls'))
+    path('pageInscription/', signup, name='pageInscription'),
+    path('pageConnexion/', login_user, name='pageConnexion'),
+     path('resultatsRecherche/', resultatsRecherche, name='resultatsRecherche'),
+    path('statistiques/', statistiques, name='statistiques'),
+    path('statistiquesGenerales/', statistiquesGenerales, name='statistiquesGenerales'),
+    path('programme/', programme, name='programme'),
+    path('compte/', compte, name='compte'),
+    path('cgu/', cgu, name='cgu'),
+    # path('', include('appliWNR.urls'))
 ]
 
 
