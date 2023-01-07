@@ -1,3 +1,15 @@
-body{
-    background-color: brown;
+body {
+  background-color: var(--black);
+}
+
+section {
+  padding: 2%;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+img.vignette {
+  border-radius: 12px;
+  height: 250px;
+  width: 180px;
 }

@@ -62,8 +62,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'libraries': { 
-                'staticfiles' : 'django.templatetags.static',
+            'libraries': {
+                'staticfiles': 'django.templatetags.static',
             },
         },
     },
@@ -77,10 +77,12 @@ WSGI_APPLICATION = 'WNR.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        'USER': 'labrette',
-        'PASSWORD': '1234',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'wnr',
+        'USER': 'root',
+        'PASSWORD': 'root_password',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

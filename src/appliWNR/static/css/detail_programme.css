@@ -1,0 +1,90 @@
+/****************** Menu ************************/
+
+body {
+  background-color: var(--black);
+  margin-bottom: 300px;
+}
+
+main {
+  margin: 4%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+/****************** Affiche ************************/
+img#affiche {
+  max-width: 350px;
+  max-height: 525px;
+}
+
+/****************** Description ************************/
+section#BlocGlobalHaut,
+div#Infos_générales {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+div#Description {
+  text-align: left;
+  padding-left: 20px;
+  color: var(--white);
+  font-family: Exo, arial;
+  display: flex;
+  flex-flow: column nowrap;
+  width: 40%;
+}
+
+div#Description h1 {
+  font-weight: 900;
+}
+
+div#Infos_générales img,
+div#Genres img {
+  margin: 10px;
+  height: 20px;
+  width: 20px;
+}
+
+div#Infos_générales,
+div#Genres {
+  display: flex;
+  align-items: center;
+}
+
+img#affiche {
+  border-radius: 12px;
+  margin-right: 30px;
+}
+
+/****************** Notation ************************/
+
+div#ligne1bouton {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+a.bouton_note {
+  color: var(--black);
+  background-color: var(--blue);
+  border: solid var(--blue) 1px;
+  border-radius: 500px;
+}
+
+section#blocCasts {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+h3 {
+  font-family: Exo, arial;
+  color: var(--white);
+  font-size: 23px;
+}
+
+p {
+  font-family: Exo, arial;
+  color: var(--white);
+  font-size: 25px;
+  opacity: 0.8;
+}
