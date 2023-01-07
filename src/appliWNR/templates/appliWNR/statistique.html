@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>Compte</title>
+<link rel="stylesheet" href=" {% static '/css/variable.css'%}" />
+<link rel="stylesheet" href=" {% static '/css/compte.css'%}" />
+{% endblock %} {% block content %}
+<main>
+  <section>
+    <h3>Mes statistiques</h3>
+
+    <div id="groupe_stats">
+      <div class="stat">
+        <p class="nombre">12j et 8h</p>
+        <p class="nom_stat">Temps passé</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">65</p>
+        <p class="nom_stat">Nombre de films/séries</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">Action</p>
+        <p class="nom_stat">Genre préféré</p>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock %}

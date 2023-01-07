@@ -1,7 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>WNR</title>
+<link rel="stylesheet" href=" {% static '/css/accueil.css'%}" />
 
-{% block content %}
-  <h2>Ceci est le corps de ma page </h2>
-{% endblock %}
-    
-
+{% endblock %} {% block content %}
+<main>
+  {% for programme in programmes %}
+  <section>
+    <a href="{% url 'detail_programme' programme.id %}">
+      <img
+        class="vignette"
+        src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+        alt="{{ programme.titreOriginal }}"
+      />
+    </a>
+  </section>
+  {% endfor %} {% endblock %}
+</main>

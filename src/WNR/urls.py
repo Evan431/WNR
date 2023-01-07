@@ -23,16 +23,19 @@ urlpatterns = [
     path('', index, name='index'),
     path('pageInscription/', signup, name='pageInscription'),
     path('pageConnexion/', login_user, name='pageConnexion'),
-     path('resultatsRecherche/', resultatsRecherche, name='resultatsRecherche'),
+    path('resultatsRecherche/', resultatsRecherche, name='resultatsRecherche'),
     path('statistiques/', statistiques, name='statistiques'),
-    path('statistiquesGenerales/', statistiquesGenerales, name='statistiquesGenerales'),
+    path('statistiquesGenerales/', statistiquesGenerales,
+         name='statistiquesGenerales'),
     path('programme/', programme, name='programme'),
     path('compte/', compte, name='compte'),
     path('cgu/', cgu, name='cgu'),
-    path('deconnexion/',logout_request, name='deconnexion'),
+    path('deconnexion/', logout_request, name='deconnexion'),
     path('pageSuppresionCompte', deleteAccount, name='suppresionCompte'),
-    path('pageConfirmationSuppression', confirmationSuppression, name="confirmationSuppression"),
+    path('pageConfirmationSuppression', confirmationSuppression,
+         name="confirmationSuppression"),
+    path('detail_programme/<int:id>/', detail_programme, name='detail_programme'),
+    path('note_programme/<int:film>/<int:note>/',
+         noteProgramme, name="noteProgramme")
     # path('', include('appliWNR.urls'))
 ]
-
-

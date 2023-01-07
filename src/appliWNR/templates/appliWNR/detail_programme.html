@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>WNR - {{ programme.titre }}</title>
+<link rel="stylesheet" href="{% static '/css/detail_programme.css'%}" />
+
+{% endblock %} {% block content %}
+<main>
+  <section id="BlocGlobalHaut">
+    <img
+      id="affiche"
+      src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+    />
+    <div id="Description">
+      <h1>{{ programme.titre }}</h1>
+      <div id="Infos_générales">
+        <p>{{ programme.date }}</p>
+        <img src="{% static '/images/losange.svg' %}" />
+
+        {% if isFilm %}
+        <p>53 min</p>
+      </div>
+      {% else %}
+      <p>3 saisons</p>
+      <img src="{% static '/images/losange.svg' %}" />
+      <p>26 épisodes</p>
+       </div>
+      <h3>Status</h2>
+      <p id="status">Fini</p>
+      {% endif %}
+      <h3>Genres</h3>
+      <div id="Genres">
+        {% for genre in programme.listGenre.all %}
+        <p>{{ genre.nom }}</p>
+        <img src="{% static '/images/losange.svg' %}" />
+        {% endfor %}
+      </div>
+      <h3>Synopsis</h3>
+      <div id="Synopsis">
+        <p>{{ programme.description }}</p>
+      </div>
+    </div>
+  </div>
+  <div id="Notation">
+    <div id="ligne1bouton">
+      <div id="like">
+        <button>Coucou</button>
+        <p>J'aime</p>
+      </div>
+      <div id="Vu">
+        <button>Coucou</button>
+        <p>Vu</p>
+      </div>
+    </div>
+    <div id="ligne2bouton">
+      <div id="Note">
+        <p>Note</p>
+        <div id="BoutonNote">
+          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 1 %}">1</a>
+          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 2 %}">2</a>
+          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 3 %}">3</a>
+          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 4 %}">4</a>
+          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 5 %}">5</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  <section id="blocCasts">
+    <div>
+      <h3>Producteurs</h3>
+      {% for p in producteurs %}
+        <p>{{ p.prenom }} {{ p.nom }}</p>
+      {% endfor %}
+    </div>
+
+    <div>
+      <h3>Scénaristes</h3>
+      {% for p in scenaristes %}
+        <p>{{ p.prenom }} {{ p.nom }}</p>
+      {% endfor %}
+    </div>
+
+    <div>
+      <h3>Compagnie de productions</h3>
+      {% for p in producteurs %}
+        <p>{{ p.prenom }} {{ p.nom }}</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section id="blocActeur-Video">
+    <div>
+      <h3>Acteurs</h3>
+      {% for key, value in acteurs.items %}
+        <p>{{ key.prenom }} {{ key.nom }}  {{ value.prenom }} {{ value.nom }}</p>
+      {% endfor %}
+    </div>
+
+    {% if programme.bandeAnnonce != 'False' %}
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{ programme.bandeAnnonce }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    {% endif %}
+  </section>
+
+</main>
+{% endblock %}
