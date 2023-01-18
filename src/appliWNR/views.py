@@ -2,6 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.core.mail import send_mail
 from django.template.defaultfilters import date
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_text
 
 import random
 from appliWNR.models import *
@@ -23,12 +31,56 @@ def signup(request):
         password = request.POST.get("Mot_de_passe")
         email = request.POST.get("Adresse_mail")
         cgu = request.POST.get("caseCocher")
+
+        email_validator = EmailValidator()
+        try:
+            email_validator(email)
+        except ValidationError as e:
+            messages.error(request, "L'adresse email n'est pas valide");
+            return redirect('signup')
+
         user = User.objects.create_user(
             username=username, password=password, email=email)
         login(request, user)
+
+        # Generate verification code
+
+        code = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+
+        # Render email template
+
+        subject = 'confirmation de votre inscription'
+        message = render_to_string('/templates/email_verification.txt', {'code' : code, 'user' : user})
+        from_email = 'noreply@exemple.com'
+        recipient_list = [user.email]
+
+        # Send email
+
+        send_mail(subject, message, from_email, recipient_list)
+
+        messages.success(request, "Un email de verification à été envoyer à l'adresse email saisie")
+
         return redirect('index')
 
     return render(request, 'appliWNR/pageInscription.html')
+# ------------------------------------  Pour verifier l'email -----------------------------------#
+
+def verify_email(request, code):
+    try:
+        # Decode the code and get the user id
+        user_id = force_text(urlsafe_base64_decode(code))
+        user = User.objects.get(pk=user_id)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None and not user.is_active:
+        user.is_active = True
+        user.save()
+        messages.success(request, "Votre compte a été activé avec succès.")
+        return redirect('login')
+    else:
+        messages.error(request, "Le lien de vérification n'est pas valide.")
+        return redirect('index')
 
 # ------------------------------------  Pour se connecter -----------------------------------#
 
