@@ -47,6 +47,7 @@ class ListeSuggestion(models.Model):
     utilisateur = models.OneToOneField(
         AUTH_USER_MODEL, on_delete=models.CASCADE)
     programmes = models.ManyToManyField(Programme)
+    derniereMAJ = models.DateTimeField(auto_now=True)
 
 
 class ListeDejaVue(models.Model):
