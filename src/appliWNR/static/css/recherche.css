@@ -1,35 +1,43 @@
-body{
-    background-color: #242222;
+body {
+  background-color: #242222;
 }
 
-header{
-    border-bottom: 20px solid #242222;
+header {
+  border-bottom: 20px solid #242222;
 }
 
-button{
-    width: 40px;
-    height: 40px;
-    background-color: #242222;
-    border: none;
+button {
+  width: 40px;
+  height: 40px;
+  background-color: #242222;
+  border: none;
 }
 
-form{
-    width: 70%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+form {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input{
-    width: 90%;
-    height: 100%;
+input {
+  width: 90%;
+  height: 100%;
+  border-radius: 12px;
+  padding: 5px 10px;
 }
 
-.container{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 40px;
-    width: 100%;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 100%;
+}
+
+img.vignette {
+  border-radius: 12px;
+  height: 250px;
+  width: 180px;
 }

@@ -1,11 +1,11 @@
 {% load static %}
-<link rel="stylesheet" href="{% static '/css/header.css' %}">
-<link rel="stylesheet" href="{% static '/css/variable.css' %}">
+<link rel="stylesheet" href="{% static '/css/header.css' %}" />
+<link rel="stylesheet" href="{% static '/css/variable.css' %}" />
 
 <header>
   <a href="{% url 'index' %}" id="logoWNR"
     ><svg
-      id="logo_WNR" 
+      id="logo_WNR"
       width="150"
       height="47.07"
       viewBox="0 0 204 64"
@@ -25,13 +25,12 @@
       </li>
       <li><a href="{% url 'statistiques' %}">SUGGESTION</a></li>
       {% if user.is_authenticated %}
-      <li><a href="#">MA LISTE</a></li>
+      <li><a href="{% url 'liste' 'maListe' %}">MA LISTE</a></li>
       {% else %}
       <li><a href="{% url 'pageConnexion' %}">MA LISTE</a></li>
       {% endif %}
-      <li><a href="{% url 'programme' %}">FILMS</a></li>
-      <li><a href="{% url 'programme' %}">SERIES</a></li>
-     
+      <li><a href="{% url 'programme' 'film' %}">FILMS</a></li>
+      <li><a href="{% url 'programme' 'serie' %}">SERIES</a></li>
     </ul>
   </nav>
   <div id="icon_header">
@@ -39,11 +38,11 @@
       ><img src=" {% static 'images/loupe.svg'%} " alt="logo rechercher"
     /></a>
     {% if user.is_authenticated %}
-    <a href="{% url 'compte' %}" id="logo_account"  
+    <a href="{% url 'compte' %}" id="logo_account"
       ><img src=" {% static 'images/compte_vide.svg'%} " alt="logo mon compte"
-      /></a>
+    /></a>
     {% else %}
-    <a href="{% url 'pageConnexion' %}" id="logo_account" 
+    <a href="{% url 'pageConnexion' %}" id="logo_account"
       ><img src=" {% static 'images/compte_vide.svg'%} " alt="logo mon compte"
     /></a>
     {% endif %}

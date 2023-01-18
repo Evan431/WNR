@@ -35,7 +35,12 @@ urlpatterns = [
     path('pageConfirmationSuppression', confirmationSuppression,
          name="confirmationSuppression"),
     path('detail_programme/<int:id>/', detail_programme, name='detail_programme'),
-    path('note_programme/<int:film>/<int:note>/',
-         noteProgramme, name="noteProgramme")
+    path('note_programme/<int:id>/<int:note>/',
+         noteProgramme, name="noteProgramme"),
+    path('listProgramme/<int:id>/<str:typeListe>/<str:action>/',
+         listProgramme, name="listProgramme"),
+    path('liste/<str:typeListe>/',
+         liste, name="liste"),
+    path('programme/<str:type>/', programme, name="programme"),
     # path('', include('appliWNR.urls'))
 ]

@@ -25,6 +25,15 @@
   </section>
   <section>
     <h3>Films / Séries déjà vues</h3>
+    {% for prog in listeDejaVue reversed %}
+    <a href="{% url 'detail_programme' prog.id %}">
+      <img
+        class="vignette"
+        src="https://image.tmdb.org/t/p/w500/{{ prog.affiche }}"
+        alt="{{ prog.titreOriginal }}"
+      />
+    </a>
+    {% endfor %}
     <button>Voir plus</button>
   </section>
   <section>
@@ -59,7 +68,9 @@
 
   <section id="boutons">
     <a class="bouton" href="{% url 'deconnexion' %}">Se déconnecter</a>
-    <a class="bouton" href="{% url 'suppresionCompte' %}">Supprimer mon compte</a>
+    <a class="bouton" href="{% url 'suppresionCompte' %}"
+      >Supprimer mon compte</a
+    >
   </section>
 </main>
 {% endblock %}

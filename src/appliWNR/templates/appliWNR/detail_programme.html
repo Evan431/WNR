@@ -42,11 +42,23 @@
   <div id="Notation">
     <div id="ligne1bouton">
       <div id="like">
-        <button>Coucou</button>
-        <p>J'aime</p>
+        {% if user.is_anonymous %}
+        <a class="bouton" href="{% url 'pageConnexion' %}"><img src="{% static '/images/plus.svg' %}"></a>
+        {% elif inMaListe %}
+        <a class="bouton" href="{% url 'listProgramme' programme.id 'maListe' 'remove' %}"><img src="{% static '/images/check.svg' %}"></a>
+        {% else %}
+        <a class="bouton" href="{% url 'listProgramme' programme.id 'maListe' 'add' %}"><img src="{% static '/images/plus.svg' %}"></a>
+        {% endif %}
+        <p>Ma liste</p>
       </div>
       <div id="Vu">
-        <button>Coucou</button>
+        {% if user.is_anonymous %}
+        <a class="bouton" href="{% url 'pageConnexion' %}"><img src="{% static '/images/eye.svg' %}"></a>
+        {% elif inListeDejaVue %}
+        <a class="bouton" href="{% url 'listProgramme' programme.id 'listeDejaVue' 'remove' %}"><img src="{% static '/images/close_eye.svg' %}"></a>
+        {% else %}
+        <a class="bouton" href="{% url 'listProgramme' programme.id 'listeDejaVue' 'add' %}"><img src="{% static '/images/eye.svg' %}"></a>
+        {% endif %}
         <p>Vu</p>
       </div>
     </div>
@@ -54,11 +66,11 @@
       <div id="Note">
         <p>Note</p>
         <div id="BoutonNote">
-          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 1 %}">1</a>
-          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 2 %}">2</a>
-          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 3 %}">3</a>
-          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 4 %}">4</a>
-          <a class="bouton_note" href="{% url 'noteProgramme' programme.id 5 %}">5</a>
+          <a class="bouton" href="{% url 'noteProgramme' programme.id 1 %}">1</a>
+          <a class="bouton" href="{% url 'noteProgramme' programme.id 2 %}">2</a>
+          <a class="bouton" href="{% url 'noteProgramme' programme.id 3 %}">3</a>
+          <a class="bouton" href="{% url 'noteProgramme' programme.id 4 %}">4</a>
+          <a class="bouton" href="{% url 'noteProgramme' programme.id 5 %}">5</a>
         </div>
       </div>
     </div>

@@ -64,7 +64,7 @@ div#ligne1bouton {
   flex-flow: row nowrap;
 }
 
-a.bouton_note {
+a.bouton {
   color: var(--black);
   background-color: var(--blue);
   border: solid var(--blue) 1px;

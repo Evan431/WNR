@@ -1,0 +1,32 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vérification</title>
+    <link rel="stylesheet" href="{% static '/css/style.css'%}" />
+  </head>
+
+  <body>
+    <div class="container">
+      <p>WNR Créer un compte WNR</p>
+      <form method="POST">
+        {% csrf_token %}
+
+        <label for="Adresse_mail"></label>
+        <input type="text" name="code" placeholder="XXXX" required />
+
+        <div class="boutonValider">
+          <label for="Bouton"> </label>
+          <input type="submit" name="Bouton" value="Continuer" />
+        </div>
+      </form>
+
+      <a id="RetourAcceuil" href="{% url 'index' %}">
+        Retour à la page d'acceuil</a
+      >
+    </div>
+  </body>
+</html>

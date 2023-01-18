@@ -1,27 +1,33 @@
-main{
-	background-color: #242222;
+main {
+  background-color: #242222;
 }
 
-.filtrage{
-    display: flex;
-	flex-flow: row;
-	justify-content: space-around;
+.filtrage {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
 }
 
-section{
-	display: flex;
-	flex-flow: row;
+section {
+  display: flex;
+  flex-flow: row;
 }
 
-.radio-button{
-	position: relative;
+.radio-button {
+  position: relative;
 }
 
-div{
-	display: flex;
-	flex-flow: column;
+div {
+  display: flex;
+  flex-flow: column;
 }
 
-label{
-	align-self: center;
+label {
+  align-self: center;
+}
+
+img.vignette {
+  border-radius: 12px;
+  height: 250px;
+  width: 180px;
 }

@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
-from appliWNR.models import Programme, Film, Role, Note
+from django.core.mail import send_mail
+from django.template.defaultfilters import date
+
+import random
+from appliWNR.models import *
 
 User = get_user_model()
 
@@ -9,17 +13,11 @@ def index(request):
     programmes = Programme.objects.all()[:10]
     return render(request, 'appliWNR/accueil.html', {"programmes": programmes})
 
-# def pageCreation(request):
-#     form = UtilisateurInscription()
-#     return render(request, 'appliWNR/pageCréation.html', { 'form' : form})
+# ------------------------------------  Pour Creer un compte -------------------"----------------#
 
-# def pageNonConnecte(request):
-#     return render(request, 'appliWNR/page non connecte.html'),
-
-
-# ------------------------------------  Pour Creer un compte -----------------------------------#
 
 def signup(request):
+    # TODO Verif checkbox CGU
     if request.method == "POST":
         username = request.POST.get("Pseudo")
         password = request.POST.get("Mot_de_passe")
@@ -60,6 +58,8 @@ def deleteAccount(request):
 
 
 def confirmationSuppression(request):
+    user = request.user
+    user.delete()
     return render(request, 'appliWNR/confirmation suppression.html')
 
 
@@ -67,9 +67,10 @@ def resultatsRecherche(request):
     if request.method == "POST":
         query = request.POST.get('Recherche', None)
         if query:
-            results = Programme.objects.filter(titre__contains=query).values(
+            results = Programme.objects.filter(titre__icontains=query).values(
             ) | Programme.objects.filter(titreOriginal__icontains=query).values()
-        return render(request, 'appliWNR/resultatsRecherche.html', {"results": results})
+        autocompletion = query
+        return render(request, 'appliWNR/resultatsRecherche.html', {"results": results, "autocompletion": autocompletion})
     return render(request, 'appliWNR/resultatsRecherche.html')
 
     # Potentielle solution avec Postgre (https://stackoverflow.com/questions/5619848/how-to-have-accent-insensitive-filter-in-django-with-postgres)
@@ -83,19 +84,38 @@ def statistiquesGenerales(request):
     return render(request, 'appliWNR/statistiquesGenerales.html')
 
 
-def programme(request):
-    lettres = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
-               'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    genres = ['Horreur', 'Fantastique',
-              'Science-fiction', 'Comédie', 'Romance', 'Drama']
-    annees = ['2022', '2003', '2078']
-    durees = ['2 h 30', '5 h', '1 h 45']
+def programme(request, type):
+    lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+               'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+    genres = [genre for genre in Genre.objects.all()]
+    annees = [annee
+              for annee in Programme.objects.all().values_list('date')]
+    durees = ['< 30 min', '30min - 1h', '1h - 1h30',
+              '1h30 - 2h', '2h - 2h30', '2h30 - 3h', '> 3h']
+
+    if type == 'film':
+        if request.method == "POST":
+            annee = request.POST.get("annee")
+            lettre = request.POST.get("lettre")
+            genre = Genre.objects.get_or_create(
+                nom=request.POST.get("genre"))
+            # programmes = Film.objects.filter(date=annee)
+            # programmes = Film.objects.filter(titre__startswith=lettre) | Film.objects.filter(titreOriginal__startswith=lettre)
+            programmes = Film.objects.filter(listGenre=genre)
+
+        else:
+            programmes = Film.objects.all()
+    elif type == 'serie':
+        programmes = Serie.objects.all()
     # Postgre
-    return render(request, 'appliWNR/programme.html', {"lettres": lettres, "genres": genres, "annees": annees, "durees": durees})
+    return render(request, 'appliWNR/programme.html', {"lettres": lettres, "genres": genres, "annees": annees, "durees": durees, "programmes": programmes})
 
 
 def compte(request):
-    return render(request, 'appliWNR/compte.html')
+
+    listeDejaVue = request.user.getListeDejaVue(
+    ).programmes.all()
+    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue})
 
 
 def cgu(request):
@@ -103,7 +123,12 @@ def cgu(request):
 
 
 def detail_programme(request, id):
-    programme = get_object_or_404(Film, id=id)
+    exists = Film.objects.filter(id=id).exists()
+    if exists:
+        programme = Film.objects.get(id=id)
+    else:
+        programme = get_object_or_404(Serie, id=id)
+
     isFilm = True if isinstance(programme, Film) else False
     producteurs = programme.listPersonne.filter(metier="producteur").all
 
@@ -111,17 +136,53 @@ def detail_programme(request, id):
     for acteur in programme.listPersonne.filter(metier="acteur"):
         acteurs[acteur] = get_object_or_404(
             Role, programme=programme, acteur=acteur)
-    print(len(acteurs))
     scenaristes = programme.listPersonne.filter(metier="scenariste").all
-    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs})
 
-
-def noteProgramme(request, film, note):
-    programme = get_object_or_404(Film, id=film)
+    # Test si programme dans listes
     user = request.user
-    note_bd = Note.objects.get_or_create(
-        programme=programme, utilisateur=user, note=note)
-    if note_bd.note != note:
-        note_bd.note.set(note)
+    if user.is_anonymous:
+        inMaListe, inListeDejaVue = False, False
+    else:
+        p = get_object_or_404(Programme, id=id)
+        maListe, _ = MaListe.objects.get_or_create(
+            utilisateur=user)
+        inMaListe = True if p in maListe.programmes.all() else False
+        listeDejaVue, _ = ListeDejaVue.objects.get_or_create(
+            utilisateur=user)
+        inListeDejaVue = True if p in listeDejaVue.programmes.all() else False
 
-    return redirect('detail_programme', film=film)
+    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user})
+
+
+def noteProgramme(request, id, note):
+    # BUG : probleme
+    programme = get_object_or_404(Programme, id=id)
+    user = request.user
+    user.noterProgramme(programme, note)
+    return redirect('detail_programme', id=id)
+
+
+def listProgramme(request, id, typeListe, action):
+    programme = get_object_or_404(Programme, id=id)
+    user = request.user
+    if typeListe == 'maListe':
+        liste, _ = MaListe.objects.get_or_create(utilisateur=user)
+    elif typeListe == 'listeDejaVue':
+        liste, _ = ListeDejaVue.objects.get_or_create(utilisateur=user)
+
+    if action == 'add' and programme not in liste.programmes.all():
+        liste.programmes.add(programme)
+    elif action == 'remove' and programme in liste.programmes.all():
+        liste.programmes.remove(programme)
+
+    liste.save()
+    return redirect('detail_programme', id=id)
+
+
+def liste(request, typeListe):
+    user = request.user
+    if typeListe == 'maListe':
+        liste, _ = MaListe.objects.get_or_create(utilisateur=user)
+    elif typeListe == 'listeDejaVue':
+        liste, _ = ListeDejaVue.objects.get_or_create(utilisateur=user)
+    return render(request, 'appliWNR/liste.html', {"programmes": liste.programmes.all})
