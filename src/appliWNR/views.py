@@ -7,9 +7,9 @@ from django.core.validators import EmailValidator
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_text
+
 
 import random
 from appliWNR.models import *
@@ -19,7 +19,7 @@ User = get_user_model()
 
 def index(request):
     programmes = Programme.objects.all()[:10]
-    return render(request, 'appliWNR/accueil.html', {"programmes": programmes})
+    return render(request, 'appliWNR/Accueil.html', {"programmes": programmes})
 
 # ------------------------------------  Pour Creer un compte -------------------"----------------#
 
@@ -45,13 +45,13 @@ def signup(request):
 
         # Generate verification code
 
-        code = urlsafe_base64_encode(force_bytes(user.pk)).decode()
+        code = urlsafe_base64_encode(force_bytes(user.pk))
 
         # Render email template
 
         subject = 'confirmation de votre inscription'
-        message = render_to_string('/templates/email_verification.txt', {'code' : code, 'user' : user})
-        from_email = 'noreply@exemple.com'
+        message = render_to_string('/home/vigaborit/Programmation/SAE301/projetWNR/WNR/src/appliWNR/templates/appliWNR/email_verification.txt', {'code' : code, 'user' : user})
+        from_email = 'gaboritvictor13@gmail.com'
         recipient_list = [user.email]
 
         # Send email
@@ -68,8 +68,9 @@ def signup(request):
 def verify_email(request, code):
     try:
         # Decode the code and get the user id
-        user_id = force_text(urlsafe_base64_decode(code))
-        user = User.objects.get(pk=user_id)
+        user_id = force_str(urlsafe_base64_decode(code))
+        #user = User.objects.get(pk=user_id)
+        user = request.user
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
