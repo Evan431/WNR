@@ -26,6 +26,13 @@ class Genre(models.Model):
         return f"{self.nom}"
 
 
+class Plateforme(models.Model):
+    nom = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.nom}"
+
+
 class Programme(models.Model):
     titre = models.CharField(max_length=100)
     titreOriginal = models.CharField(max_length=100)
@@ -35,6 +42,7 @@ class Programme(models.Model):
     listPersonne = models.ManyToManyField(Personne)
     listGenre = models.ManyToManyField(Genre)
     listCompaProd = models.ManyToManyField(CompagnieProduction)
+    listPlateforme = models.ManyToManyField(Plateforme)
     note_global = models.PositiveIntegerField(null=True)
     description = models.TextField()
     date = models.DateField()

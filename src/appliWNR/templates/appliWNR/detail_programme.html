@@ -83,6 +83,14 @@
     </div>
   </div>
   </section>
+  <section id="blocPlateformes">
+    <h3>Disponible sur</h3>
+    <div class="plateformes">
+      {% for i in plateformes %}
+      <img class="logo_plateforme" src="{% static i %}"/>
+      {% endfor %}
+    </div>
+  </section>
   <section id="blocCasts">
     <div>
       <h3>Producteurs</h3>
@@ -107,11 +115,20 @@
   </section>
 
   <section id="blocActeur-Video">
-    <div>
+    <div id="bloc_gauche">
       <h3>Acteurs</h3>
-      {% for key, value in acteurs.items %}
-        <p>{{ key.prenom }} {{ key.nom }} | {{ value.nom }}</p>
-      {% endfor %}
+      <div id="liste">
+        <div id="acteurs">
+          {% for key, value in acteurs.items %}
+          <p>{{ key.prenom }} {{ key.nom }}</p>
+          {% endfor %}
+        </div>
+        <div id="roles">
+          {% for key, value in acteurs.items %}
+          <p>{{ value.nom }}</p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
 
     {% if programme.bandeAnnonce != 'False' %}

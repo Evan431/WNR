@@ -74,6 +74,13 @@ a.bouton {
 section#blocCasts {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+section#blocCasts div {
+  margin: 0 50px;
+  text-align: center;
 }
 
 h3 {
@@ -87,4 +94,61 @@ p {
   color: var(--white);
   font-size: 25px;
   opacity: 0.8;
+}
+
+img.logo_plateforme {
+  width: 150px;
+  height: auto;
+  margin: 0 20px;
+}
+
+section#blocPlateformes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div#plateformes {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+section {
+  margin-top: 50px;
+}
+
+section#blocActeur-Video {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+div#bloc_gauche {
+  margin-right: 50px;
+  text-align: center;
+}
+
+div#liste {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+div#acteurs,
+div#roles {
+  text-align: left;
+  margin: 0 10px;
+}
+
+div#roles {
+  opacity: 0.6;
+}
+
+iframe {
+  border-radius: 12px;
 }

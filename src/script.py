@@ -38,6 +38,13 @@ tmdb.debug = True
 #         personnes.append(Personne.objects.get_or_create(
 #             prenom=name[0], nom=" ".join(name[1:]), metier="producteur")[0])
 
+# plateformes = []
+# watch_provider = movie.watch_providers(id)
+
+# for i in details.results['FR']['flatrate']:
+#     if i.provider_name != 'Netflix basic with Ads':
+#         plateformes.append(Plateforme.objects.get_or_create(nom=i.provider_name)[0])
+
 # film = Film.objects.get_or_create(titre=details.title, titreOriginal=details.original_title,
 #                                   popularite=details.popularity, description=details.overview, date=details.release_date, affiche=details.poster_path, duree=details.runtime, bandeAnnonce=details.video)[0]
 
@@ -53,16 +60,17 @@ tmdb.debug = True
 
 # for i in personnes:
 #     film.listPersonne.add(i)
-# film.save()
 
+# for i in plateformes:
+#     film.listPlateforme.add(i)
+# film.save()
 
 # RECUP SERIE
 tv = TV()
-id = 66732
+id = 52814
 details = tv.details(id)
 production_companies = []
 for i in details.production_companies:
-    print(i)
     production_companies.append(
         CompagnieProduction.objects.get_or_create(nom=i['name'])[0])
 
@@ -83,19 +91,32 @@ for p in details.credits['crew']:
         personnes.append(Personne.objects.get_or_create(
             prenom=name[0], nom=" ".join(name[1:]), metier="producteur")[0])
 
-tv = Serie.objects.get_or_create(titre=details.name, titreOriginal=details.original_name,
-                                 popularite=details.popularity, description=details.overview, date=details.first_air_date, affiche=details.poster_path, dureeMoyEp=details.episode_run_time[0], bandeAnnonce=details.videos['results'][0]['key'], nombreSaison=details.number_of_seasons, nombreEpisodes=details.number_of_episodes, status=details.status)[0]
+plateformes = []
+watch_provider = tv.watch_providers(id)
+for i in watch_provider.results['FR']['flatrate']:
+    if i.provider_name != 'Netflix basic with Ads':
+        plateformes.append(
+            Plateforme.objects.get_or_create(nom=i.provider_name)[0])
+
+runtime = details.episode_run_time[0] if len(
+    details.episode_run_time) > 0 else 0
+
+serie = Serie.objects.get_or_create(titre=details.name, titreOriginal=details.original_name,
+                                    popularite=details.popularity, description=details.overview, date=details.first_air_date, affiche=details.poster_path, dureeMoyEp=runtime, bandeAnnonce=details.videos['results'][0]['key'], nombreSaison=details.number_of_seasons, nombreEpisodes=details.number_of_episodes, status=details.status)[0]
 
 for i in production_companies:
-    tv.listCompaProd.add(i)
+    serie.listCompaProd.add(i)
+
+for i in plateformes:
+    serie.listPlateforme.add(i)
 
 for i in genres:
-    tv.listGenre.add(i)
+    serie.listGenre.add(i)
 
 for k, v in acteurs.items():
-    tv.listPersonne.add(k)
-    Role.objects.get_or_create(nom=v, programme=tv, acteur=k)[0]
+    serie.listPersonne.add(k)
+    Role.objects.get_or_create(nom=v, programme=serie, acteur=k)[0]
 
 for i in personnes:
-    tv.listPersonne.add(i)
-tv.save()
+    serie.listPersonne.add(i)
+serie.save()

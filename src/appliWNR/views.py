@@ -163,6 +163,9 @@ def detail_programme(request, id):
     isFilm = True if isinstance(programme, Film) else False
     producteurs = programme.listPersonne.filter(metier="producteur").all()
     compaProd = programme.listCompaProd.all()
+    plateformes = ["/images/"+x.nom.lower().replace(" ", "_")+".svg"
+                   for x in programme.listPlateforme.all()]
+    print(plateformes)
 
     acteurs = {}
     for acteur in programme.listPersonne.filter(metier="acteur"):
@@ -183,7 +186,7 @@ def detail_programme(request, id):
             utilisateur=user)
         inListeDejaVue = True if p in listeDejaVue.programmes.all() else False
 
-    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "compaProd": compaProd, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user})
+    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "compaProd": compaProd, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user, "plateformes": plateformes})
 
 
 def noteProgramme(request, id, note):
