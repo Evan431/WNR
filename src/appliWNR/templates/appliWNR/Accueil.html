@@ -4,16 +4,95 @@
 
 {% endblock %} {% block content %}
 <main>
+  {% if user.is_authenticated and suggestion %}
   <section>
-    {% for programme in programmes %}
-    <a href="{% url 'detail_programme' programme.id %}">
-      <img
-        class="vignette"
-        src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
-        alt="{{ programme.titreOriginal }}"
-      />
-    </a>
-    {% endfor %}
+    <div class="titre">
+      <h3>Suggestion</h3>
+      <a href="{% url 'programme' 'film' %}">Voir plus ></a>
+    </div>
+    <div class="liste">
+      {% for programme in suggestion %}
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section>
+    <div class="titre">
+      <h3>Tendances</h3>
+    </div>
+    <div class="liste">
+      {% for programme in tendances %}
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% if user.is_authenticated and maListe %}
+  <section>
+    <div class="titre">
+      <h3>Ma liste</h3>
+      <a href="{% url 'programme' 'film' %}">Voir plus ></a>
+    </div>
+    <div class="liste">
+      {% for programme in maListe %}
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <section>
+    <div class="titre">
+      <h3>Films</h3>
+      <a href="{% url 'programme' 'film' %}">Voir plus ></a>
+    </div>
+    <div class="liste">
+      {% for programme in films %}
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  <section>
+    <div class="titre">
+      <h3>Séries</h3>
+      <a href="{% url 'programme' 'serie' %}">Voir plus ></a>
+    </div>
+    <div class="liste">
+      {% for programme in series %}
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
   </section>
 </main>
 {% endblock %}

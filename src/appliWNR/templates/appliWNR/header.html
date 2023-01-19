@@ -20,13 +20,14 @@
   </a>
   <nav id="nav">
     <ul>
-      <li id="IndicateurPageActuel">
+      <li>
         <a href="{% url 'index' %}">ACCUEIL</a>
       </li>
-      <li><a href="{% url 'statistiques' %}">SUGGESTION</a></li>
       {% if user.is_authenticated %}
+      <li><a href="{% url 'liste' 'listeSuggestion' %}">SUGGESTION</a></li>
       <li><a href="{% url 'liste' 'maListe' %}">MA LISTE</a></li>
       {% else %}
+      <li><a href="{% url 'pageConnexion' %}">SUGGESTION</a></li>
       <li><a href="{% url 'pageConnexion' %}">MA LISTE</a></li>
       {% endif %}
       <li><a href="{% url 'programme' 'film' %}">FILMS</a></li>

@@ -1,50 +1,61 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
-<title>Programme</title>
+<title>{{type|capfirst}}</title>
 <link rel="stylesheet" href="{% static '/css/programme.css'%}" />
 
 {% endblock %} {% block content %}
 
 <main>
-  <div class="filtrage">
-    <form action="{% url 'programme' 'film' %}" method="POST">
-      {% csrf_token %}
-      <section>
-        <select id="genre" name="genre">
-          <option value="" selected>Genre</option>
-          {% for genre in genres %}
-          <option value="{{genre}}">{{genre}}</option>
-          {% endfor %}
-        </select>
-      </section>
-      <section>
-        <id="annee" name="annee">
-          <option value="" selected>Année</option>
-          {% for annee in annees %}
-          <option value="{{annee}}">{{annee}}</option>
-          {% endfor %}
-        </select>
-      </section>
-      <section>
-        <select id="duree" name="duree">
-          <option value="" selected>Durée</option>
-          {% for duree in durees %}
-          <option value="{{duree}}">{{duree}}</option>
-          {% endfor %}
-        </select>
-      </section>
-      <section>
-        {% for caractere in lettres %}
-        <div>
-          <input type="radio" name="lettre" id="lettre" value="{{caractere}}" />
-          <label for="lettre">{{caractere}}</label>
-        </div>
-        {% endfor %}
-      </section>
-      <section>
-        <button type="submit">BOUTON</button>
-      </section>
-    </form>
-  </div>
+  <form action="{% url 'programme' type %}" method="POST">
+    {% csrf_token %}
+    <section>
+      <select id="genre" name="genre">
+        <option value="">Genre</option>
+        {% for g in genres %} {% if g == genre %}
+        <option value="{{g}}" selected>{{g}}</option>
+        {% else %}
+        <option value="{{g}}">{{g}}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </section>
+    <section>
+      <select id="annee" name="annee">
+        <option value="" selected>Année</option>
+        {% for a in annees %} {% if a == annee %}
+        <option value="{{a}}" selected>{{a}}</option>
+        {% else %}
+        <option value="{{a}}">{{a}}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </section>
+    <section>
+      <select id="duree" name="duree">
+        <option value="" selected>Durée</option>
+        {% for d in durees %} {% if d == duree %}
+        <option value="{{d}}" selected>{{d}}</option>
+        {% else %}
+        <option value="{{d}}">{{d}}</option>
+        {% endif %} {% endfor %}
+      </select>
+    </section>
+    <section>
+      {% for c in lettres %} {% if c == lettre %}
+      <input
+        type="radio"
+        name="lettre"
+        id="lettre-{{c}}"
+        value="{{c}}"
+        checked
+      />
+      {% else %}
+      <input type="radio" name="lettre" id="lettre-{{c}}" value="{{c}}" />
+      {% endif %}
+      <label for="lettre-{{c}}">{{c}}</label>
+      {% endfor %}
+    </section>
+    <section>
+      <button type="submit">VALIDER</button>
+    </section>
+  </form>
   <section>
     {% for programme in programmes %}
     <a href="{% url 'detail_programme' programme.id %}">
@@ -54,6 +65,8 @@
         alt="{{ programme.titreOriginal }}"
       />
     </a>
+    {% empty %}
+    <p>Aucun programme correspondant</p>
     {% endfor %}
   </section>
 </main>

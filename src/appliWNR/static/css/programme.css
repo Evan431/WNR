@@ -1,11 +1,16 @@
 main {
+  padding: 2%;
+}
+
+body {
   background-color: #242222;
 }
 
-.filtrage {
+form {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
   justify-content: space-around;
+  margin: 0 0 25px 0;
 }
 
 section {
@@ -13,13 +18,55 @@ section {
   flex-flow: row;
 }
 
-.radio-button {
-  position: relative;
+input[type="radio"] {
+  display: none;
+}
+input[type="radio"] + label {
+  padding: 0.3rem 0.5rem;
+  color: var(--white);
+  border-radius: 25px;
+  font-family: Audiowide;
+  transition: 0.35s;
+}
+input[type="radio"]:checked + label {
+  background-color: var(--blue);
+  color: var(--black);
+  transition: 0.35s;
 }
 
-div {
-  display: flex;
-  flex-flow: column;
+input[type="radio"]:hover + label {
+  background-color: var(--blue);
+  color: var(--black);
+  transition: 0.35s;
+  opacity: 0.5;
+}
+
+button[type="submit"] {
+  background-color: var(--blue);
+  font-family: Exo, Arial;
+  border-radius: 24px;
+  color: var(--black);
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: medium;
+  transform: scale(1);
+  transition: 0.5s;
+}
+
+button[type="submit"]:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+  background-color: #58eaea;
+}
+
+select {
+  background-color: var(--blue);
+  font-family: Exo, Arial;
+  border-radius: 24px;
+  color: var(--black);
+  font-weight: bold;
+  padding: 5px 10px;
+  font-size: medium;
 }
 
 label {

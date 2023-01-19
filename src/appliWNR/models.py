@@ -109,10 +109,19 @@ class MaListe(models.Model):
 
 
 class Film(Programme):
-    duree = models.CharField(max_length=100)
+    duree = models.IntegerField()
 
     def __str__(self):
         return f"Film : {self.titre}"
+
+    def getListeFiltre():
+        annees = [annee.year for annee in Film.objects.all(
+        ).values_list('date', flat=True).distinct()]
+        durees = {'< 30 min': (0, 30), '30min - 1h': (30, 60), '1h - 1h30': (60, 90), '1h30 - 2h': (
+            90, 120), '2h - 2h30': (120, 150), '2h30 - 3h': (150, 180), '> 3h': (180, 99999999)}
+        genres = Film.objects.values_list(
+            'listGenre__nom', flat=True).distinct()
+        return annees, durees, genres
 
 
 class Serie(Programme):
@@ -123,6 +132,15 @@ class Serie(Programme):
 
     def __str__(self):
         return f"Série : {self.titre}"
+
+    def getListeFiltre():
+        annees = [
+            annee.year for annee in Serie.objects.all().values_list('date', flat=True).distinct()]
+        durees = {'< 15 min': (0, 15), '15min - 30min': (15, 30), '30min - 45min': (30, 45), '45min - 1h': (
+            45, 60), '1h - 1h15': (60, 75), '1h15 - 1h30': (75, 90), '> 1h30': (90, 99999999)}
+        genres = Serie.objects.values_list(
+            'listGenre__nom', flat=True).distinct()
+        return annees, durees, genres
 
 
 class Role(models.Model):

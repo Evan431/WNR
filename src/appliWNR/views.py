@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.core.mail import send_mail
 from django.template.defaultfilters import date
+from django.db.models import Q
+
 
 import random
 from appliWNR.models import *
@@ -10,8 +12,20 @@ User = get_user_model()
 
 
 def index(request):
-    programmes = Programme.objects.all()[:10]
-    return render(request, 'appliWNR/accueil.html', {"programmes": programmes})
+    user = request.user
+    films = Film.objects.all()[:10]
+    series = Serie.objects.all()[:10]
+    tendances = Programme.objects.order_by('-popularite')[:10]
+    if user.is_anonymous:
+        maListe, suggestion = False, False
+    else:
+        maListe = MaListe.objects.get_or_create(
+            utilisateur=user)[0].programmes.all()[:10]
+        suggestion = ListeSuggestion.objects.get_or_create(
+            utilisateur=user)[0].programmes.all()[:10]
+
+    # programmes = Programme.objects.all()[:10]
+    return render(request, 'appliWNR/accueil.html', {"suggestion": suggestion, "maListe": maListe, "films": films, "series": series, "tendances": tendances})
 
 # ------------------------------------  Pour Creer un compte -------------------"----------------#
 
@@ -85,30 +99,48 @@ def statistiquesGenerales(request):
 
 
 def programme(request, type):
+    annee, lettre, genre, duree = "", "", "", ""
     lettres = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-    genres = [genre for genre in Genre.objects.all()]
-    annees = [annee
-              for annee in Programme.objects.all().values_list('date')]
-    durees = ['< 30 min', '30min - 1h', '1h - 1h30',
-              '1h30 - 2h', '2h - 2h30', '2h30 - 3h', '> 3h']
-
     if type == 'film':
-        if request.method == "POST":
-            annee = request.POST.get("annee")
-            lettre = request.POST.get("lettre")
-            genre = Genre.objects.get_or_create(
-                nom=request.POST.get("genre"))
-            # programmes = Film.objects.filter(date=annee)
-            # programmes = Film.objects.filter(titre__startswith=lettre) | Film.objects.filter(titreOriginal__startswith=lettre)
-            programmes = Film.objects.filter(listGenre=genre)
-
-        else:
-            programmes = Film.objects.all()
+        annees, durees, genres = Film.getListeFiltre()
     elif type == 'serie':
-        programmes = Serie.objects.all()
-    # Postgre
-    return render(request, 'appliWNR/programme.html', {"lettres": lettres, "genres": genres, "annees": annees, "durees": durees, "programmes": programmes})
+        annees, durees, genres = Serie.getListeFiltre()
+
+    if request.method == "POST":
+        annee = request.POST.get("annee")
+        lettre = request.POST.get("lettre")
+        genre = request.POST.get("genre")
+        duree = request.POST.get("duree")
+        query = Q()
+
+        if annee:
+            query = query & Q(date__year=annee)
+        if lettre:
+            query = query & (Q(titre__startswith=lettre) |
+                             Q(titreOriginal__startswith=lettre))
+        if genre:
+            query = query & Q(listGenre__nom=genre)
+
+        if type == 'film':
+            if duree:
+                duree = durees[request.POST.get("duree")]
+                query = query & Q(duree__gte=duree[0], duree__lte=duree[1])
+            programmes = Film.objects.filter(query)[:50]
+
+        elif type == 'serie':
+            if duree:
+                duree = durees[request.POST.get("duree")]
+                query = query & Q(
+                    dureeMoyEp__gte=duree[0], dureeMoyEp__lte=duree[1])
+            programmes = Serie.objects.filter(query)[:50]
+        else:
+            programmes = Programme.objects.all()[:50]
+        duree = request.POST.get("duree")
+    else:
+        programmes = Serie.objects.all(
+        ) if type == 'serie' else Film.objects.all()[:50]
+    return render(request, 'appliWNR/programme.html', {"lettres": lettres, "genres": genres, "annees": annees, "durees": durees, "programmes": programmes, "type": type, "genre": genre, "annee": annee, "lettre": lettre, "duree": duree})
 
 
 def compte(request):
@@ -155,7 +187,6 @@ def detail_programme(request, id):
 
 
 def noteProgramme(request, id, note):
-    # BUG : probleme
     programme = get_object_or_404(Programme, id=id)
     user = request.user
     user.noterProgramme(programme, note)
@@ -183,6 +214,12 @@ def liste(request, typeListe):
     user = request.user
     if typeListe == 'maListe':
         liste, _ = MaListe.objects.get_or_create(utilisateur=user)
+        nomListe = "Ma liste"
     elif typeListe == 'listeDejaVue':
         liste, _ = ListeDejaVue.objects.get_or_create(utilisateur=user)
-    return render(request, 'appliWNR/liste.html', {"programmes": liste.programmes.all})
+        nomListe = "Déjà vue"
+    elif typeListe == 'listeSuggestion':
+        liste, _ = ListeSuggestion.objects.get_or_create(utilisateur=user)
+        nomListe = "Suggestion"
+
+    return render(request, 'appliWNR/liste.html', {"programmes": liste.programmes.all, "nomListe": nomListe})

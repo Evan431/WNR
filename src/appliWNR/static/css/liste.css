@@ -5,11 +5,24 @@ body {
 section {
   padding: 2%;
   display: flex;
-  flex-flow: row wrap;
+  flex-direction: column;
 }
 
 img.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
+  margin-left: 20px;
+}
+
+h3 {
+  font-family: Audiowide;
+  color: var(--blue);
+  margin-right: 10px;
+}
+
+div.liste {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }

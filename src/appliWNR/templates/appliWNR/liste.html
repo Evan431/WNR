@@ -1,19 +1,25 @@
 {% extends 'base.html' %} {% load static %} {% block head %}
 <title>WNR</title>
-<link rel="stylesheet" href=" {% static '/css/accueil.css'%}" />
+<link rel="stylesheet" href=" {% static '/css/liste.css'%}" />
 
 {% endblock %} {% block content %}
 <main>
   <section>
-    {% for programme in programmes %}
-    <a href="{% url 'detail_programme' programme.id %}">
-      <img
-        class="vignette"
-        src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
-        alt="{{ programme.titreOriginal }}"
-      />
-    </a>
-    {% endfor %}
+    <h3>{{ nomListe }}</h3>
+    <div class="liste">
+      {% for programme in programmes %}
+
+      <a href="{% url 'detail_programme' programme.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+          alt="{{ programme.titreOriginal }}"
+        />
+      </a>
+      {% empty %}
+      <p>Votre liste est vide</p>
+      {% endfor %}
+    </div>
   </section>
 </main>
 {% endblock %}
