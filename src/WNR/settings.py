@@ -72,6 +72,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'WNR.wsgi.application'
 
+# Emailing settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_FROM = 'gaboritvictor13@gmail.com'
+EMAIL_HOST_USER = 'gaboritvictor13@gmail.com'
+EMAIL_HOST_PASSWORD = 'ufasoaloeuykzhxv '
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+PASSWORD_RESET_TIMEOUT = 14400
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

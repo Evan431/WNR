@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from WNR.settings import AUTH_USER_MODEL
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+import six
 
 
 class CompagnieProduction(models.Model):
@@ -129,3 +131,10 @@ class Role(models.Model):
     nom = models.CharField(max_length=100)
     programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
     acteur = models.ForeignKey(Personne, on_delete=models.CASCADE)
+
+class AccountActivationTokenGenerator(PasswordResetTokenGenerator):
+    def make_hash_value(self, user, timestamp):
+        return {
+            six.text_type(user.pk) + six.text_type(timestamp) + six.text_type(user.is_active)
+        }
+account_activation_token = AccountActivationTokenGenerator()

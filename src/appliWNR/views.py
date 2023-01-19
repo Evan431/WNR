@@ -1,18 +1,22 @@
+import uuid
+#from cProfile import Profile
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
-from django.core.mail import send_mail
 from django.template.defaultfilters import date
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.contrib import messages
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-
+from django import forms
+from django.contrib.sites.shortcuts import get_current_site
 
 import random
 from appliWNR.models import *
+from appliWNR.models import account_activation_token
 
 User = get_user_model()
 
@@ -21,11 +25,30 @@ def index(request):
     programmes = Programme.objects.all()[:10]
     return render(request, 'appliWNR/Accueil.html', {"programmes": programmes})
 
+# ------------------------------------  Pour Creer un l'email d'envoie -------------------"----------------#
+def activate(request, uidb64, token):
+    return redirect('index')
+def activateEmail(request, user, to_email):
+    email_subject ="confirmation de votre inscription"
+    message = "salut"
+    message = render_to_string("Activate_account.html", {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': account_activation_token.make_token(user),
+        "Protocol": "https" if request.is_secure() else 'http'
+    })
+
+    email = EmailMessage(email_subject, message, to=[to_email])
+    email.send(fail_silently=False)
+    if email.send():
+        messages.success(request, f'Cher <b>{user}</b>, Veuillez verrifier votre boîte mail <b>{to_email}</b> de reception pour confirmer votre inscription en cliquant sur le lien de confirmation que nous venons de vous envoyez.')
+    else:
+        messages.error(request, f'email non envoyer à {to_email}, veuillez vérifier si vous entré le bon email.')
+
 # ------------------------------------  Pour Creer un compte -------------------"----------------#
 
-
 def signup(request):
-    # TODO Verif checkbox CGU
     if request.method == "POST":
         username = request.POST.get("Pseudo")
         password = request.POST.get("Mot_de_passe")
@@ -42,27 +65,13 @@ def signup(request):
         user = User.objects.create_user(
             username=username, password=password, email=email)
         login(request, user)
-
-        # Generate verification code
-
-        code = urlsafe_base64_encode(force_bytes(user.pk))
-
-        # Render email template
-
-        subject = 'confirmation de votre inscription'
-        message = render_to_string('/home/vigaborit/Programmation/SAE301/projetWNR/WNR/src/appliWNR/templates/appliWNR/email_verification.txt', {'code' : code, 'user' : user})
-        from_email = 'gaboritvictor13@gmail.com'
-        recipient_list = [user.email]
-
-        # Send email
-
-        send_mail(subject, message, from_email, recipient_list)
-
-        messages.success(request, "Un email de verification à été envoyer à l'adresse email saisie")
-
+        user.is_active = False
+        activateEmail(request, user, email)
+        user.save()
         return redirect('index')
 
     return render(request, 'appliWNR/pageInscription.html')
+
 # ------------------------------------  Pour verifier l'email -----------------------------------#
 
 def verify_email(request, code):
