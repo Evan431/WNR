@@ -144,10 +144,9 @@ def programme(request, type):
 
 
 def compte(request):
-
-    listeDejaVue = request.user.getListeDejaVue(
-    ).programmes.all()
-    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue})
+    listeDejaVue, _ = ListeDejaVue.objects.get_or_create(
+        utilisateur=request.user)
+    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue.programmes.all()})
 
 
 def cgu(request):
@@ -162,13 +161,14 @@ def detail_programme(request, id):
         programme = get_object_or_404(Serie, id=id)
 
     isFilm = True if isinstance(programme, Film) else False
-    producteurs = programme.listPersonne.filter(metier="producteur").all
+    producteurs = programme.listPersonne.filter(metier="producteur").all()
+    compaProd = programme.listCompaProd.all()
 
     acteurs = {}
     for acteur in programme.listPersonne.filter(metier="acteur"):
         acteurs[acteur] = get_object_or_404(
             Role, programme=programme, acteur=acteur)
-    scenaristes = programme.listPersonne.filter(metier="scenariste").all
+    scenaristes = programme.listPersonne.filter(metier="scenariste").all()
 
     # Test si programme dans listes
     user = request.user
@@ -183,13 +183,17 @@ def detail_programme(request, id):
             utilisateur=user)
         inListeDejaVue = True if p in listeDejaVue.programmes.all() else False
 
-    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user})
+    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "compaProd": compaProd, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user})
 
 
 def noteProgramme(request, id, note):
     programme = get_object_or_404(Programme, id=id)
     user = request.user
-    user.noterProgramme(programme, note)
+    if user.is_anonymous:
+        return render(request, 'appliWNR/pageConnexion.html')
+    else:
+        user.noterProgramme(programme, note)
+    programme.majNote()
     return redirect('detail_programme', id=id)
 
 

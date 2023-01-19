@@ -10,21 +10,28 @@
       src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
     />
     <div id="Description">
-      <h1>{{ programme.titre }}</h1>
+      <h1>{{ programme.titre }}
+        {% if programme.titre != programme.titreOriginal %}
+        <span>({{ programme.titreOriginal }})</span>
+        {% endif %}
+
+      </h1>
       <div id="Infos_générales">
         <p>{{ programme.date }}</p>
         <img src="{% static '/images/losange.svg' %}" />
 
         {% if isFilm %}
-        <p>53 min</p>
+        <p>{{ programme.duree }} min</p>
       </div>
       {% else %}
-      <p>3 saisons</p>
+      <p>{{ programme.dureeMoyEp }} min</p>
       <img src="{% static '/images/losange.svg' %}" />
-      <p>26 épisodes</p>
+      <p>{{ programme.nombreSaison }} saison(s)</p>
+      <img src="{% static '/images/losange.svg' %}" />
+      <p>{{ programme.nombreEpisodes }} épisode(s)</p>
        </div>
       <h3>Status</h2>
-      <p id="status">Fini</p>
+      <p id="status">{{ programme.status }}</p>
       {% endif %}
       <h3>Genres</h3>
       <div id="Genres">
@@ -93,8 +100,8 @@
 
     <div>
       <h3>Compagnie de productions</h3>
-      {% for p in producteurs %}
-        <p>{{ p.prenom }} {{ p.nom }}</p>
+      {% for p in compaProd %}
+        <p>{{ p.nom }}</p>
       {% endfor %}
     </div>
   </section>
@@ -103,7 +110,7 @@
     <div>
       <h3>Acteurs</h3>
       {% for key, value in acteurs.items %}
-        <p>{{ key.prenom }} {{ key.nom }}  {{ value.prenom }} {{ value.nom }}</p>
+        <p>{{ key.prenom }} {{ key.nom }} | {{ value.nom }}</p>
       {% endfor %}
     </div>
 
