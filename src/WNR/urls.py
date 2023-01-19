@@ -42,5 +42,7 @@ urlpatterns = [
     path('liste/<str:typeListe>/',
          liste, name="liste"),
     path('programme/<str:type>/', programme, name="programme"),
+    #path('activate/<uidb64>/<token>', views.activate, name='activate')
+    path('activate/<uidb64>/<token>', activate, name='activate')
     # path('', include('appliWNR.urls'))
 ]

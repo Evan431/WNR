@@ -1,23 +1,19 @@
-import uuid
-#from cProfile import Profile
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.template.defaultfilters import date
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from django.contrib import messages
+from django.urls import reverse
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
-from django.utils.encoding import force_bytes, force_str
+from django.utils.encoding import force_bytes, force_str, DjangoUnicodeDecodeError
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django import forms
 from django.contrib.sites.shortcuts import get_current_site
-
-import random
+from django.views import View
 from appliWNR.models import *
-from appliWNR.models import account_activation_token
-
+from .tokens import account_activation_token
+from django.contrib.auth.models import User
 User = get_user_model()
 
 
@@ -25,19 +21,35 @@ def index(request):
     programmes = Programme.objects.all()[:10]
     return render(request, 'appliWNR/Accueil.html', {"programmes": programmes})
 
-# ------------------------------------  Pour Creer un l'email d'envoie -------------------"----------------#
+# ------------------------------------  Pour verifier l'activation du compte -------------------"----------------#
 def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+
+        messages.success(request, "Merci pour la confirmation. Vous pouvez maintenant vous connecter")
+    else:
+        messages.error(request, "L'activation n'est pas valide")
     return redirect('index')
+
+# ------------------------------------  Pour Creer un l'email d'envoie -------------------"----------------#
+
 def activateEmail(request, user, to_email):
+
     email_subject ="confirmation de votre inscription"
-    message = "salut"
-    message = render_to_string("Activate_account.html", {
-        'user': user.username,
-        'domain': get_current_site(request).domain,
-        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-        'token': account_activation_token.make_token(user),
-        "Protocol": "https" if request.is_secure() else 'http'
-    })
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+    domain = get_current_site(request).domain
+    link = reverse('activate', kwargs={'uidb64': uidb64, 'token': account_activation_token.make_token(user)})
+
+    activate_url = 'http://'+domain+link
+
+    message = 'Hi' +' '+ user.username + ' '+'Veuillez utiliser ce lien pour valider votre inscription\n\n' + activate_url
 
     email = EmailMessage(email_subject, message, to=[to_email])
     email.send(fail_silently=False)
@@ -65,42 +77,27 @@ def signup(request):
         user = User.objects.create_user(
             username=username, password=password, email=email)
         login(request, user)
+
+
         user.is_active = False
-        activateEmail(request, user, email)
         user.save()
-        return redirect('index')
+        activateEmail(request, user, email)
+        #return redirect('index')
 
     return render(request, 'appliWNR/pageInscription.html')
 
-# ------------------------------------  Pour verifier l'email -----------------------------------#
-
-def verify_email(request, code):
-    try:
-        # Decode the code and get the user id
-        user_id = force_str(urlsafe_base64_decode(code))
-        #user = User.objects.get(pk=user_id)
-        user = request.user
-    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-
-    if user is not None and not user.is_active:
-        user.is_active = True
-        user.save()
-        messages.success(request, "Votre compte a été activé avec succès.")
-        return redirect('login')
-    else:
-        messages.error(request, "Le lien de vérification n'est pas valide.")
+class VerificationView(View):
+    def get(self, request, uidb64, token):
         return redirect('index')
 
 # ------------------------------------  Pour se connecter -----------------------------------#
-
 
 def login_user(request):
     if request.method == "POST":
         username = request.POST.get("Pseudo")
         password = request.POST.get("Mot_de_passe")
         user = authenticate(username=username, password=password)
-        if user:
+        if user and user.is_active == True:
             login(request, user)
             return redirect('index')
     return render(request, 'appliWNR/pageConnexion.html')
@@ -174,10 +171,9 @@ def programme(request, type):
 
 
 def compte(request):
-
-    listeDejaVue = request.user.getListeDejaVue(
-    ).programmes.all()
-    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue})
+    listeDejaVue, _ = ListeDejaVue.objects.get_or_create(
+        utilisateur=request.user)
+    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue.programmes.all()})
 
 
 def cgu(request):

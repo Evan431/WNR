@@ -50,7 +50,7 @@ class Utilisateur(AbstractUser):
             liste = ListeDejaVue.objects.get(
                 utilisateur=self)
         else:
-            liste = []
+            ListeDejaVue.objects.create(utilisateur=self)
         return liste
 
     def getMaListe(self):
