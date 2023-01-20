@@ -1,0 +1,31 @@
+#popup-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: var(--bloc);
+    color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px var(--black);
+    display: none;
+}
+
+#popup-message .modal {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+#popup-message .button_container {
+    text-align: right;
+}
+
+#popup-message #close {
+    background-color: var(--black);
+    color: var(--white);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}

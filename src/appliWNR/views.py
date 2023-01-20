@@ -54,7 +54,7 @@ def activateEmail(request, user, to_email):
     email = EmailMessage(email_subject, message, to=[to_email])
     email.send(fail_silently=False)
     if email.send():
-        messages.success(request, f'Cher <b>{user}</b>, Veuillez verrifier votre boîte mail <b>{to_email}</b> de reception pour confirmer votre inscription en cliquant sur le lien de confirmation que nous venons de vous envoyez.')
+        messages.success(request, f'Cher {user}, Veuillez verrifier votre boîte mail {to_email} de reception pour confirmer votre inscription en cliquant sur le lien de confirmation que nous venons de vous envoyez.')
     else:
         messages.error(request, f'email non envoyer à {to_email}, veuillez vérifier si vous entré le bon email.')
 
@@ -85,10 +85,6 @@ def signup(request):
         #return redirect('index')
 
     return render(request, 'appliWNR/pageInscription.html')
-
-class VerificationView(View):
-    def get(self, request, uidb64, token):
-        return redirect('index')
 
 # ------------------------------------  Pour se connecter -----------------------------------#
 
