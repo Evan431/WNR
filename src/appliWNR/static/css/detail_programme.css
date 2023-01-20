@@ -6,7 +6,7 @@ body {
 }
 
 main {
-  margin: 4%;
+  margin: 2% 4%;
   display: flex;
   flex-direction: column;
   /* align-items: center; */
@@ -19,7 +19,16 @@ img#affiche {
 }
 
 /****************** Description ************************/
-section#BlocGlobalHaut,
+section#BlocGlobalHaut {
+  display: flex;
+  flex-direction: column;
+}
+
+div#affiche_info {
+  display: flex;
+  flex-flow: row wrap;
+}
+
 div#Infos_générales {
   display: flex;
   flex-flow: row wrap;
@@ -37,6 +46,13 @@ div#Description {
 
 div#Description h1 {
   font-weight: 900;
+  margin-top: 0;
+  font-size: 30px;
+}
+
+h1 span {
+  opacity: 0.7;
+  font-style: italic;
 }
 
 div#Infos_générales img,
@@ -59,9 +75,55 @@ img#affiche {
 
 /****************** Notation ************************/
 
+div#blocNotation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div#notation {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
 div#ligne1bouton {
   display: flex;
   flex-flow: row nowrap;
+}
+
+div#ligne2bouton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+div#ligne2bouton p {
+  opacity: 1;
+  font-size: 18px;
+  font-family: Audiowide;
+}
+
+div#ligne1bouton div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+div#note {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div#boutonNote {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
 }
 
 a.bouton {
@@ -69,6 +131,28 @@ a.bouton {
   background-color: var(--blue);
   border: solid var(--blue) 1px;
   border-radius: 500px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  text-decoration: none;
+  font-family: Audiowide;
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.5s;
+}
+
+a.bouton:focus,
+a.bouton:hover {
+  opacity: 0.5;
+  transition: 0.5s;
+}
+
+a#note_user {
+  color: var(--white);
+  background-color: var(--black);
 }
 
 section#blocCasts {
@@ -86,14 +170,16 @@ section#blocCasts div {
 h3 {
   font-family: Exo, arial;
   color: var(--white);
-  font-size: 23px;
+  font-size: 20px;
+  margin-bottom: 5px;
 }
 
-p {
+main p {
   font-family: Exo, arial;
   color: var(--white);
-  font-size: 25px;
+  font-size: 15px;
   opacity: 0.8;
+  margin: 0;
 }
 
 img.logo_plateforme {
@@ -109,11 +195,12 @@ section#blocPlateformes {
   align-items: center;
 }
 
-div#plateformes {
+div.plateformes {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  margin-top: 15px;
 }
 
 section {

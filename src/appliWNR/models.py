@@ -43,7 +43,7 @@ class Programme(models.Model):
     listGenre = models.ManyToManyField(Genre)
     listCompaProd = models.ManyToManyField(CompagnieProduction)
     listPlateforme = models.ManyToManyField(Plateforme)
-    note_global = models.PositiveIntegerField(null=True)
+    note_global = models.FloatField(null=True)
     description = models.TextField()
     date = models.DateField()
 

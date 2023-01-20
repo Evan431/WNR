@@ -2,8 +2,8 @@ body {
   background-color: #242222;
 }
 
-header {
-  border-bottom: 20px solid #242222;
+main {
+  padding: 2%;
 }
 
 button {
@@ -15,20 +15,20 @@ button {
 
 form {
   width: 70%;
-  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 50px;
+  margin-top: 20px;
 }
 
 input {
   width: 90%;
-  height: 100%;
   border-radius: 12px;
   padding: 5px 10px;
 }
 
-.container {
+section#container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,4 +40,10 @@ img.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
+  margin: 5px 10px;
+}
+
+section#resultat {
+  display: flex;
+  flex-flow: row wrap;
 }

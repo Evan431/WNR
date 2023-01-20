@@ -38,3 +38,23 @@ div.titre {
   flex-direction: row;
   align-items: center;
 }
+
+div.liste {
+  overflow-x: scroll;
+  scrollbar-color: var(--blue) none;
+  border-radius: 12px;
+  padding-bottom: 10px;
+}
+
+div.liste::-webkit-scrollbar {
+  height: 8px;
+}
+
+div.liste::-webkit-scrollbar-track {
+  background: none;
+}
+
+div.liste::-webkit-scrollbar-thumb {
+  background-color: var(--blue);
+  border-radius: 20px;
+}

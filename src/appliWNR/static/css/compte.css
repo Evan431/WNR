@@ -51,6 +51,8 @@ a.bouton {
   text-decoration: none;
   transform: scale(1);
   transition: 0.5s;
+  margin-top: 15px;
+  width: 80px;
 }
 
 button:hover,
@@ -79,4 +81,17 @@ img.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
+}
+
+section#dejaVue {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+div.liste {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }

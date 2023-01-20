@@ -5,6 +5,7 @@
 {% endblock %} {% block content %}
 <main>
   <section id="BlocGlobalHaut">
+    <div id="affiche_info">
     <img
       id="affiche"
       src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
@@ -19,7 +20,8 @@
       <div id="Infos_générales">
         <p>{{ programme.date }}</p>
         <img src="{% static '/images/losange.svg' %}" />
-
+        <p>{{ programme.note_global }}</p>
+        <img src="{% static '/images/losange.svg' %}" />
         {% if isFilm %}
         <p>{{ programme.duree }} min</p>
       </div>
@@ -42,13 +44,15 @@
       </div>
       <h3>Synopsis</h3>
       <div id="Synopsis">
-        <p>{{ programme.description }}</p>
+        <p style="text-align: justify;">{{ programme.description }}</p>
       </div>
     </div>
   </div>
-  <div id="Notation">
+</div>
+  <div id="notation">
+    <div id="blocNotation">
     <div id="ligne1bouton">
-      <div id="like">
+      <div>
         {% if user.is_anonymous %}
         <a class="bouton" href="{% url 'pageConnexion' %}"><img src="{% static '/images/plus.svg' %}"></a>
         {% elif inMaListe %}
@@ -58,7 +62,7 @@
         {% endif %}
         <p>Ma liste</p>
       </div>
-      <div id="Vu">
+      <div>
         {% if user.is_anonymous %}
         <a class="bouton" href="{% url 'pageConnexion' %}"><img src="{% static '/images/eye.svg' %}"></a>
         {% elif inListeDejaVue %}
@@ -70,18 +74,24 @@
       </div>
     </div>
     <div id="ligne2bouton">
-      <div id="Note">
+      <div id="note">
         <p>Note</p>
-        <div id="BoutonNote">
-          <a class="bouton" href="{% url 'noteProgramme' programme.id 1 %}">1</a>
-          <a class="bouton" href="{% url 'noteProgramme' programme.id 2 %}">2</a>
-          <a class="bouton" href="{% url 'noteProgramme' programme.id 3 %}">3</a>
-          <a class="bouton" href="{% url 'noteProgramme' programme.id 4 %}">4</a>
-          <a class="bouton" href="{% url 'noteProgramme' programme.id 5 %}">5</a>
+        <div id="boutonNote">
+          {% for k, v in notes.items %}
+            {% if v %}
+            <a class="bouton" id="note_user" href="{% url 'noteProgramme' programme.id k %}">{{k}}</a>
+            {% else %}
+            <a class="bouton" href="{% url 'noteProgramme' programme.id k %}">{{k}}</a>
+            {% endif %}
+
+          {% endfor %}
+
+
         </div>
       </div>
     </div>
   </div>
+</div>
   </section>
   <section id="blocPlateformes">
     <h3>Disponible sur</h3>

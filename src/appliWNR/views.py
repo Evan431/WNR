@@ -145,7 +145,7 @@ def programme(request, type):
 
 def compte(request):
     listeDejaVue, _ = ListeDejaVue.objects.get_or_create(
-        utilisateur=request.user)
+        utilisateur=request.user)[:5]
     return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue.programmes.all()})
 
 
@@ -165,7 +165,6 @@ def detail_programme(request, id):
     compaProd = programme.listCompaProd.all()
     plateformes = ["/images/"+x.nom.lower().replace(" ", "_")+".svg"
                    for x in programme.listPlateforme.all()]
-    print(plateformes)
 
     acteurs = {}
     for acteur in programme.listPersonne.filter(metier="acteur"):
@@ -174,10 +173,14 @@ def detail_programme(request, id):
     scenaristes = programme.listPersonne.filter(metier="scenariste").all()
 
     # Test si programme dans listes
+    notes = {1: False, 2: False, 3: False, 4: False, 5: False}
     user = request.user
     if user.is_anonymous:
         inMaListe, inListeDejaVue = False, False
     else:
+        note_user = Note.objects.filter(utilisateur=user, programme=programme)
+        if note_user:
+            notes[note_user[0].note] = True
         p = get_object_or_404(Programme, id=id)
         maListe, _ = MaListe.objects.get_or_create(
             utilisateur=user)
@@ -186,7 +189,7 @@ def detail_programme(request, id):
             utilisateur=user)
         inListeDejaVue = True if p in listeDejaVue.programmes.all() else False
 
-    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "compaProd": compaProd, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user, "plateformes": plateformes})
+    return render(request, 'appliWNR/detail_programme.html', {"programme": programme, "isFilm": isFilm, "producteurs": producteurs, "scenaristes": scenaristes, "acteurs": acteurs, "compaProd": compaProd, "inListeDejaVue": inListeDejaVue, "inMaListe": inMaListe, "user": user, "plateformes": plateformes, "notes": notes})
 
 
 def noteProgramme(request, id, note):

@@ -23,6 +23,6 @@ h3 {
 
 div.liste {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
 }

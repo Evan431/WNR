@@ -15,7 +15,7 @@ form {
 
 section {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
 }
 
 input[type="radio"] {
@@ -77,4 +77,5 @@ img.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
+  margin: 5px 10px;
 }

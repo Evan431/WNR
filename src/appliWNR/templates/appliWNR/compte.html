@@ -23,17 +23,19 @@
     </div>
     <a class="bouton" href="{% url 'statistiques' %}">Voir plus</a>
   </section>
-  <section>
+  <section id="dejaVue">
     <h3>Films / Séries déjà vues</h3>
-    {% for prog in listeDejaVue reversed %}
-    <a href="{% url 'detail_programme' prog.id %}">
-      <img
-        class="vignette"
-        src="https://image.tmdb.org/t/p/w500/{{ prog.affiche }}"
-        alt="{{ prog.titreOriginal }}"
-      />
-    </a>
-    {% endfor %}
+    <div class="liste">
+      {% for prog in listeDejaVue reversed %}
+      <a href="{% url 'detail_programme' prog.id %}">
+        <img
+          class="vignette"
+          src="https://image.tmdb.org/t/p/w500/{{ prog.affiche }}"
+          alt="{{ prog.titreOriginal }}"
+        />
+      </a>
+      {% endfor %}
+    </div>
     <a class="bouton" href="{% url 'liste' 'listeDejaVue' %}">Voir plus</a>
   </section>
   <section>

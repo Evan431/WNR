@@ -15,12 +15,12 @@ div#icon_header {
 nav ul {
   list-style: none;
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
 }
 
 nav {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   align-items: center;
 }
 
