@@ -3,6 +3,8 @@ from django.contrib.auth import get_user_model, login, logout, authenticate
 from django.core.mail import send_mail
 from django.template.defaultfilters import date
 from django.db.models import Q
+from datetime import datetime, timedelta
+from algo_suggestion import algoSuggestion
 
 
 import random
@@ -17,15 +19,17 @@ def index(request):
     series = Serie.objects.all()[:10]
     tendances = Programme.objects.order_by('-popularite')[:10]
     if user.is_anonymous:
-        maListe, suggestion = False, False
+        maListe, listeSuggestion = False, False
     else:
         maListe = MaListe.objects.get_or_create(
             utilisateur=user)[0].programmes.all()[:10]
-        suggestion = ListeSuggestion.objects.get_or_create(
+
+        suggestion(request.user)
+        listeSuggestion = ListeSuggestion.objects.get_or_create(
             utilisateur=user)[0].programmes.all()[:10]
 
     # programmes = Programme.objects.all()[:10]
-    return render(request, 'appliWNR/accueil.html', {"suggestion": suggestion, "maListe": maListe, "films": films, "series": series, "tendances": tendances})
+    return render(request, 'appliWNR/accueil.html', {"suggestion": listeSuggestion, "maListe": maListe, "films": films, "series": series, "tendances": tendances})
 
 # ------------------------------------  Pour Creer un compte -------------------"----------------#
 
@@ -229,7 +233,16 @@ def liste(request, typeListe):
         liste, _ = ListeDejaVue.objects.get_or_create(utilisateur=user)
         nomListe = "Déjà vue"
     elif typeListe == 'listeSuggestion':
-        liste, _ = ListeSuggestion.objects.get_or_create(utilisateur=user)
+        liste = suggestion(request.user)
         nomListe = "Suggestion"
 
     return render(request, 'appliWNR/liste.html', {"programmes": liste.programmes.all, "nomListe": nomListe})
+
+
+def suggestion(user):
+    liste, create = ListeSuggestion.objects.get_or_create(utilisateur=user)
+    # FIXME : comparaison heure
+    if (datetime.now().hour - liste.derniereMAJ.hour) > 2 or create:
+        algoSuggestion(user)
+        liste, _ = ListeSuggestion.objects.get_or_create(utilisateur=user)
+    return liste
