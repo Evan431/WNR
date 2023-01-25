@@ -13,11 +13,18 @@
     <div class="liste">
       {% for programme in suggestion %}
       <a href="{% url 'detail_programme' programme.id %}">
+        {% if programme.affiche != "" %}
         <img
           class="vignette"
           src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
           alt="{{ programme.titreOriginal }}"
         />
+        {% else %}
+        <div class="vignette">
+          <p>{{ programme.titre }}</p>
+          <img src="{% static 'images/clap.svg'%}" />
+        </div>
+        {% endif %}
       </a>
       {% endfor %}
     </div>
@@ -31,11 +38,18 @@
     <div class="liste">
       {% for programme in tendances %}
       <a href="{% url 'detail_programme' programme.id %}">
+        {% if programme.affiche != "" %}
         <img
           class="vignette"
           src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
           alt="{{ programme.titreOriginal }}"
         />
+        {% else %}
+        <div class="vignette">
+          <p>{{ programme.titre }}</p>
+          <img src="{% static 'images/clap.svg'%}" />
+        </div>
+        {% endif %}
       </a>
       {% endfor %}
     </div>
@@ -49,11 +63,18 @@
     <div class="liste">
       {% for programme in maListe %}
       <a href="{% url 'detail_programme' programme.id %}">
+        {% if programme.affiche != "" %}
         <img
           class="vignette"
           src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
           alt="{{ programme.titreOriginal }}"
         />
+        {% else %}
+        <div class="vignette">
+          <p>{{ programme.titre }}</p>
+          <img src="{% static 'images/clap.svg'%}" />
+        </div>
+        {% endif %}
       </a>
       {% endfor %}
     </div>
@@ -68,11 +89,18 @@
     <div class="liste">
       {% for programme in films %}
       <a href="{% url 'detail_programme' programme.id %}">
+        {% if programme.affiche != "" %}
         <img
           class="vignette"
           src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
           alt="{{ programme.titreOriginal }}"
         />
+        {% else %}
+        <div class="vignette">
+          <p>{{ programme.titre }}</p>
+          <img src="{% static 'images/clap.svg'%}" />
+        </div>
+        {% endif %}
       </a>
       {% endfor %}
     </div>
@@ -85,11 +113,18 @@
     <div class="liste">
       {% for programme in series %}
       <a href="{% url 'detail_programme' programme.id %}">
+        {% if programme.affiche != "" %}
         <img
           class="vignette"
           src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
           alt="{{ programme.titreOriginal }}"
         />
+        {% else %}
+        <div class="vignette">
+          <p>{{ programme.titre }}</p>
+          <img src="{% static 'images/clap.svg'%}" />
+        </div>
+        {% endif %}
       </a>
       {% endfor %}
     </div>

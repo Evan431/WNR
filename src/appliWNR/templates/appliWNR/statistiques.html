@@ -1,59 +1,51 @@
-{% extends 'base.html' %}
-
-{% load static %}
-
-{% block head %}
-  <title>Statistiques</title>
-  <link rel="stylesheet" href="{% static '/css/statistiques.css'%}">
-{% endblock %} 
-
-{% block content %}
-	
-		{% include 'appliWNR/statistiquesGenerales.html' %}
-		<main>
-			<h1> Hey, je suis une statistique ! O-O </h1>
-			<section>
-			    <div id="groupe_stats">
-			      <div class="stat">
-			        <p class="nombre">12j et 8h</p>
-			        <p class="nom_stat">Temps passé</p>
-			      </div>
-			      <div class="stat">
-			        <p class="nombre">65</p>
-			        <p class="nom_stat">Nombre de films/séries</p>
-			      </div>
-			      <div class="stat">
-			        <p class="nombre">Action</p>
-			        <p class="nom_stat">Genre préféré</p>
-			      </div>
-			    </div>
-	  		</section>
-	  		<section>
-	  			<div class="camembert">
-	  				<img src="{% static 'images/Camembert1.png'%}"/>
-	  				<hr>
-	  				<img src="{% static 'images/Camembert2.png'%}"/>
-	  			</div>
-	  		</section>
-	  		<section>
-			    <div id="groupe_stats">
-			      <div class="stat">
-			        <p class="nom">Tom Holland</p>
-			        <p class="nom_stat">Acteur préféré</p>
-			      </div>
-			      <div class="stat">
-			        <p class="nom">Luc Besson</p>
-			        <p class="nom_stat">Réalisateur préféré</p>
-			      </div>
-			      <div class="stat">
-			        <p class="nom">Quentin Tarantino</p>
-			        <p class="nom_stat">Scénariste préféré</p>
-			      </div>
-			      <div class="stat">
-			        <p class="nom">Marvel Studio</p>
-			        <p class="nom_stat">Compagnie de production préféré</p>
-			      </div>
-			    </div>
-	  		</section>
-	  	</main>
+{% extends 'base.html' %} {% load static %} {% block head %}
+<title>Statistiques</title>
+<link rel="stylesheet" href="{% static '/css/statistiques.css'%}" />
+{% endblock %} {% block content %} {% include
+'appliWNR/statistiquesGenerales.html' %}
+<main>
+  <section>
+    <div id="groupe_stats">
+      <div class="stat">
+        <p class="nombre">12j et 8h</p>
+        <p class="nom_stat">Temps passé</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">65</p>
+        <p class="nom_stat">Nombre de films/séries</p>
+      </div>
+      <div class="stat">
+        <p class="nombre">Action</p>
+        <p class="nom_stat">Genre préféré</p>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="camembert">
+      <img src="{% static 'images/Camembert1.png'%}" />
+      <hr />
+      <img src="{% static 'images/Camembert2.png'%}" />
+    </div>
+  </section>
+  <section>
+    <div id="groupe_stats">
+      <div class="stat">
+        <p class="nom">Tom Holland</p>
+        <p class="nom_stat">Acteur préféré</p>
+      </div>
+      <div class="stat">
+        <p class="nom">Luc Besson</p>
+        <p class="nom_stat">Réalisateur préféré</p>
+      </div>
+      <div class="stat">
+        <p class="nom">Quentin Tarantino</p>
+        <p class="nom_stat">Scénariste préféré</p>
+      </div>
+      <div class="stat">
+        <p class="nom">Marvel Studio</p>
+        <p class="nom_stat">Compagnie de production préféré</p>
+      </div>
+    </div>
+  </section>
+</main>
 {% endblock %}

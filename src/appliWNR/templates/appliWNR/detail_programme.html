@@ -6,10 +6,18 @@
 <main>
   <section id="BlocGlobalHaut">
     <div id="affiche_info">
-    <img
-      id="affiche"
-      src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
-    />
+      {% if programme.affiche != "" %}
+      <img
+        class="vignette"
+        src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
+        alt="{{ programme.titreOriginal }}"
+      />
+      {% else %}
+      <div class="vignette">
+        <p>{{ programme.titre }}</p>
+        <img src="{% static 'images/clap.svg'%}" />
+      </div>
+      {% endif %}
     <div id="Description">
       <h1>{{ programme.titre }}
         {% if programme.titre != programme.titreOriginal %}
@@ -105,13 +113,6 @@
     <div>
       <h3>Producteurs</h3>
       {% for p in producteurs %}
-        <p>{{ p.prenom }} {{ p.nom }}</p>
-      {% endfor %}
-    </div>
-
-    <div>
-      <h3>Scénaristes</h3>
-      {% for p in scenaristes %}
         <p>{{ p.prenom }} {{ p.nom }}</p>
       {% endfor %}
     </div>

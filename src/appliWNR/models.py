@@ -4,15 +4,15 @@ from WNR.settings import AUTH_USER_MODEL
 
 
 class CompagnieProduction(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=200)
 
     def __str__(self):
         return f"{self.nom}"
 
 
 class Personne(models.Model):
-    nom = models.CharField(max_length=100)
-    prenom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=200)
+    prenom = models.CharField(max_length=200)
     metier = models.CharField(max_length=100)
 
     def __str__(self):
@@ -20,22 +20,22 @@ class Personne(models.Model):
 
 
 class Genre(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=200)
 
     def __str__(self):
         return f"{self.nom}"
 
 
 class Plateforme(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=200)
 
     def __str__(self):
         return f"{self.nom}"
 
 
 class Programme(models.Model):
-    titre = models.CharField(max_length=100)
-    titreOriginal = models.CharField(max_length=100)
+    titre = models.CharField(max_length=200)
+    titreOriginal = models.CharField(max_length=200)
     bandeAnnonce = models.CharField(max_length=100)
     popularite = models.FloatField()
     affiche = models.CharField(max_length=100)
@@ -154,7 +154,7 @@ class Film(Programme):
 class Serie(Programme):
     nombreSaison = models.IntegerField(default=1)
     nombreEpisodes = models.IntegerField(default=1)
-    status = models.CharField(max_length=100)
+    status = models.CharField(max_length=200)
     dureeMoyEp = models.IntegerField()
 
     def __str__(self):
@@ -171,7 +171,7 @@ class Serie(Programme):
 
 
 class Role(models.Model):
-    nom = models.CharField(max_length=100)
+    nom = models.CharField(max_length=350)
     programme = models.ForeignKey(Programme, on_delete=models.CASCADE)
     acteur = models.ForeignKey(Personne, on_delete=models.CASCADE)
 

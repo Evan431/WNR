@@ -39,13 +39,16 @@ def recupFilm(id):
     plateformes = []
     watch_provider = movie.watch_providers(id)
 
-    for i in watch_provider.results['FR']['flatrate']:
-        if i.provider_name != 'Netflix basic with Ads':
-            plateformes.append(
-                Plateforme.objects.get_or_create(nom=i.provider_name)[0])
+    if 'FR' in watch_provider.results:
+        if 'flatrate' in watch_provider.results['FR']:
+            for i in watch_provider.results['FR']['flatrate']:
+                if i.provider_name != 'Netflix basic with Ads':
+                    plateformes.append(
+                        Plateforme.objects.get_or_create(nom=i.provider_name)[0])
 
+    affiche = details.poster_path if details.poster_path else ""
     film = Film.objects.get_or_create(titre=details.title, titreOriginal=details.original_title,
-                                      popularite=details.popularity, description=details.overview, date=details.release_date, affiche=details.poster_path, duree=details.runtime, bandeAnnonce=details.video)[0]
+                                      popularite=details.popularity, description=details.overview, date=details.release_date, affiche=affiche, duree=details.runtime, bandeAnnonce=details.video)[0]
 
     for i in production_companies:
         film.listCompaProd.add(i)

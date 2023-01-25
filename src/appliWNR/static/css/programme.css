@@ -73,9 +73,26 @@ label {
   align-self: center;
 }
 
-img.vignette {
+img.vignette,
+div.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
   margin: 5px 10px;
+}
+
+div.vignette {
+  background-color: var(--gray);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+div.vignette p {
+  font-size: 18px;
+}
+
+section a {
+  text-decoration: none;
 }

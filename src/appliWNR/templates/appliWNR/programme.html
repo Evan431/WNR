@@ -59,11 +59,18 @@
   <section>
     {% for programme in programmes %}
     <a href="{% url 'detail_programme' programme.id %}">
+      {% if programme.affiche != "" %}
       <img
         class="vignette"
         src="https://image.tmdb.org/t/p/w500/{{ programme.affiche }}"
         alt="{{ programme.titreOriginal }}"
       />
+      {% else %}
+      <div class="vignette">
+        <p>{{ programme.titre }}</p>
+        <img src="{% static 'images/clap.svg'%}" />
+      </div>
+      {% endif %}
     </a>
     {% empty %}
     <p>Aucun programme correspondant</p>

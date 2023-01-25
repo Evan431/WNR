@@ -3,7 +3,6 @@ from appliWNR.models import *
 from datetime import datetime
 
 # Fonction qui récupère, à partir d'une note donnée, tous les programmes qui ont cette note en utilisatent le Django ORM (Object-Relational Mapping)
-# FIXME
 
 
 def ChoixNote(note):
@@ -19,9 +18,7 @@ def GenrePlusFrequent(utilisateur):
     listeGenres = list(set([
         genre for program in listeProgramme.programmes.all() for genre in program.listGenre.all()]))
     genresFrequent = [genre for genre, _ in Counter(listeGenres).most_common()]
-    # most_common_genres = []
-    # for genre, count in genre_counts.most_common():
-    #     most_common_genres.append(genre)
+
     return genresFrequent[:3] if len(genresFrequent) >= 4 else genresFrequent[:(len(genresFrequent)-1)]
 
 
@@ -88,7 +85,9 @@ def dicoProgramme(utilisateur, liste):
         ) if Personne.metier == "producteurs"]
         score += nbPointCommun(listeProducteurs, listeProducteurPref)
 
-        # Le score peut être entre 0 et 20
+        if programme.note_global:
+            score += programme.note_global / 5
+
         scoreProgramme[programme] = score
     print(scoreProgramme)
     return sorted(scoreProgramme.items(), key=lambda x: x[1], reverse=True)
@@ -121,12 +120,21 @@ def choixProgramme(utilisateur, listeSerie, listeFilm, type):
     return dicoTrieDecroissantFilm[:int(nombreFilm)] + dicoTrieDecroissantSerie[:int(nombreSerie)]
 
 
+def recupProgrammeData(user):
+    liste = []
+    for p in ListeDejaVue.objects.get_or_create(utilisateur=user)[0].programmes.all():
+        note = Note.objects.filter(utilisateur=user, programme=p)
+        if note.exists() and len(note) > 0 and note[0].note >= 3:
+            liste.append(p)
+    return liste
+
+
 def algoSuggestion(utilisateur):
-    listProgramme = ListeDejaVue.objects.get(utilisateur=utilisateur)
+    listProgramme = recupProgrammeData(utilisateur)
     pourcentageSerie, pourcentageFilm, = typePrefere(utilisateur)
     listeFilm, listeSerie = [], []
     for programme in Programme.objects.all():
-        if programme not in listProgramme.programmes.all():
+        if programme not in ListeDejaVue.objects.get_or_create(utilisateur=utilisateur)[0].programmes.all():
             if Film.objects.filter(id=programme.id).exists():
                 listeFilm.append(programme)
             if Serie.objects.filter(id=programme.id).exists():
@@ -151,6 +159,3 @@ def remplirListeSuggestion(liste, user):
         print("fin", programme)
         listeUser.programmes.add(programme[0])
     listeUser.save()
-
-
-# Ajout possible : varier score avec note contenu et/ou popularité

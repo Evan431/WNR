@@ -81,6 +81,7 @@ img.vignette {
   border-radius: 12px;
   height: 250px;
   width: 180px;
+  margin: 0 10px;
 }
 
 section#dejaVue {

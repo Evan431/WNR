@@ -1,14 +1,19 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model, login, logout, authenticate
-from django.core.mail import send_mail
-from django.template.defaultfilters import date
 from django.db.models import Q
-from datetime import datetime, timedelta
+from datetime import datetime
 from algo_suggestion import algoSuggestion
-
-
-import random
+from django.contrib import messages
+from django.urls import reverse
+from django.core.mail import EmailMessage
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
 from appliWNR.models import *
+from appliWNR.token import account_activation_token
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import EmailValidator
 
 User = get_user_model()
 
@@ -34,17 +39,68 @@ def index(request):
 # ------------------------------------  Pour Creer un compte -------------------"----------------#
 
 
+def activate(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+    else:
+        messages.error(request, "L'activation n'est pas valide")
+    return redirect('index')
+
+# ------------------------------------  Pour Creer un l'email d'envoie -------------------"----------------#
+
+
+def activateEmail(request, user, to_email):
+    email_subject = "confirmation de votre inscription"
+    uidb64 = urlsafe_base64_encode(force_bytes(user.pk))
+    domain = get_current_site(request).domain
+    link = reverse('activate', kwargs={
+                   'uidb64': uidb64, 'token': account_activation_token.make_token(user)})
+
+    activate_url = 'http://'+domain+link
+
+    message = 'Hi' + ' ' + user.username + ' ' + \
+        'Veuillez utiliser ce lien pour valider votre inscription\n\n' + activate_url
+
+    email = EmailMessage(email_subject, message, to=[to_email])
+    email.send(fail_silently=False)
+    if email.send():
+        messages.success(
+            request, f'Cher {user}, Veuillez verrifier votre boîte mail {to_email} pour confirmer votre inscription en cliquant sur le lien de confirmation que nous venons de vous envoyez.')
+    else:
+        messages.error(
+            request, f'email non envoyer à {to_email}, veuillez vérifier si vous entré le bon email.')
+
+
 def signup(request):
-    # TODO Verif checkbox CGU
+
     if request.method == "POST":
         username = request.POST.get("Pseudo")
         password = request.POST.get("Mot_de_passe")
         email = request.POST.get("Adresse_mail")
         cgu = request.POST.get("caseCocher")
+
+        email_validator = EmailValidator()
+        try:
+            email_validator(email)
+        except ValidationError as e:
+            messages.error(request, "L'adresse email n'est pas valide")
+            return redirect('signup')
+
         user = User.objects.create_user(
             username=username, password=password, email=email)
         login(request, user)
-        return redirect('index')
+
+        user.is_active = False
+        user.save()
+        activateEmail(request, user, email)
+        # return redirect('index')
 
     return render(request, 'appliWNR/pageInscription.html')
 
@@ -148,9 +204,12 @@ def programme(request, type):
 
 
 def compte(request):
-    listeDejaVue, _ = ListeDejaVue.objects.get_or_create(
-        utilisateur=request.user)[:5]
-    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue.programmes.all()})
+    listeDejaVue = ListeDejaVue.objects.get_or_create(
+        utilisateur=request.user)[0].programmes.all()
+    if len(listeDejaVue) > 5:
+        listeDejaVue = listeDejaVue[:4]
+
+    return render(request, 'appliWNR/compte.html', {"listeDejaVue": listeDejaVue})
 
 
 def cgu(request):
@@ -203,6 +262,9 @@ def noteProgramme(request, id, note):
         return render(request, 'appliWNR/pageConnexion.html')
     else:
         user.noterProgramme(programme, note)
+        liste, _ = ListeDejaVue.objects.get_or_create(utilisateur=user)
+        liste.programmes.add(programme)
+
     programme.majNote()
     return redirect('detail_programme', id=id)
 
@@ -241,8 +303,7 @@ def liste(request, typeListe):
 
 def suggestion(user):
     liste, create = ListeSuggestion.objects.get_or_create(utilisateur=user)
-    # FIXME : comparaison heure
-    if (datetime.now().hour - liste.derniereMAJ.hour) > 2 or create:
+    if (abs(datetime.now().hour - liste.derniereMAJ.hour)) > 2 or create:
         algoSuggestion(user)
         liste, _ = ListeSuggestion.objects.get_or_create(utilisateur=user)
     return liste
